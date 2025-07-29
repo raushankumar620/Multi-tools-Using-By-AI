@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gesture Launcher</title>
+  <style>
+    /* Background Gradient */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #6e8efb, #a777e3, #f78ca0);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Container Card */
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      margin: 10px 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Status Text */
+    .status {
+      margin-top: 16px;
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 0 0 4px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>✨ Gesture Launcher</h2>
+    <p>Control your apps with hand gestures</p>
+
+    <div>
+      <button class="btn" onclick="startGesture()">🚀 Start Gesture</button>
+      <button class="btn" onclick="stopGesture()">🛑 Stop Gesture</button>
+    </div>
+
+    <div id="feedback" class="status"></div>
+  </div>
+
+  <script>
+    const feedback = document.getElementById("feedback");
+
+    function startGesture() {
+      feedback.textContent = "🟢 Gesture detection starting...";
+      fetch("{{ url_for('start_gesture') }}", { method: "POST" })
+        .then((res) => res.json())
+        .then((data) => {
+          feedback.textContent = data.msg;
+        })
+        .catch(() => {
+          feedback.textContent = "❌ Error starting gesture.";
+        });
+    }
+
+    function stopGesture() {
+      feedback.textContent = "🔴 Stopping gesture detection...";
+      fetch("{{ url_for('stop_gesture') }}", { method: "POST" })
+        .then((res) => res.json())
+        .then((data) => {
+          feedback.textContent = data.msg;
+        })
+        .catch(() => {
+          feedback.textContent = "❌ Error stopping gesture.";
+        });
+    }
+  </script>
+</body>
+</html>

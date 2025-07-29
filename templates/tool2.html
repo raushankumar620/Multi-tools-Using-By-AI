@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tool 2 - Gun Detector</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tool 2: Gun Detector</h2>
+        <p>Run gun gesture detection here.</p>
+        <button class="tool-btn" onclick="launchTool2()">Start Gun Detector</button>
+        <div id="feedback" style="margin-top:18px; color:#6366f1; font-weight:600;"></div>
+        <a href="/">Back to Home</a>
+    </div>
+    <script>
+        function launchTool2() {
+            document.getElementById('feedback').textContent = 'Starting...';
+            fetch('/run_tool2', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('feedback').textContent = data.msg;
+                })
+                .catch(() => {
+                    document.getElementById('feedback').textContent = 'Error starting tool.';
+                });
+        }
+    </script>
+</body>
+
+</html>
