@@ -1,38 +1,47 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart AI Tools</title>
-
-  <!-- 🌈 STYLES -->
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>
+    Smart AI Tools
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&amp;display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
+      background-color: #000000;
       color: #fff;
+      min-height: 100vh;
+      position: relative;
     }
 
-    /* 🌟 NAVBAR */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 40px;
-      background: linear-gradient(120deg, #ff6ec4, #7873f5, #4ADEDE);
-      background-size: 300% 300%;
-      animation: gradientMove 8s ease infinite;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    /* Typing cursor animation */
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background-color: #4ade80;
+      margin-left: 2px;
+      animation: blink 1s infinite;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink {
+
+      0%,
+      50%,
+      100% {
+        opacity: 1;
+      }
+
+      25%,
+      75% {
+        opacity: 0;
+      }
     }
 
     @keyframes gradientMove {
@@ -49,294 +58,247 @@
       }
     }
 
-    .logo {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    .animate-gradientMove {
+      animation: gradientMove 8s ease infinite;
+      background-size: 300% 300%;
     }
 
-    .logo-icon {
-      font-size: 1.5em;
-      animation: pulse 2s infinite;
-    }
+    @keyframes bgGradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
 
-    @keyframes pulse {
+      50% {
+        background-position: 100% 50%;
+      }
 
-      0%,
       100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(1.2);
-        opacity: 0.7;
+        background-position: 0% 50%;
       }
     }
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
-
-    .nav-links li a {
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      background: linear-gradient(90deg, #ffffff22, #ffffff11);
-    }
-
-    .nav-links li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-      transform: translateY(-2px) scale(1.05);
-    }
-
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        gap: 12px;
-        width: 100%;
-        margin-top: 10px;
-      }
-
-      .nav-links li a {
-        width: 100%;
-        display: block;
-      }
-    }
-
-    /* 🌟 MAIN CONTENT */
-    .center-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 80px 20px;
-      background: radial-gradient(circle at center, #1f1f1f, #121212);
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .ai-badge {
-      font-size: 1.2em;
-      font-weight: bold;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      display: inline-block;
-      text-shadow: 0 0 8px rgba(0, 194, 255, 0.4);
-    }
-
-    .typing-welcome {
-      font-size: 2em;
-      font-weight: bold;
-      margin-bottom: 40px;
-      color: #fff;
-    }
-
-    #typing-text {
-      color: #4ADEDE;
-    }
-
-    .typing-cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1.2em;
-      background-color: #4ADEDE;
-      animation: blink 1s step-end infinite;
-      margin-left: 5px;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    /* 🌟 CARDS */
-    .cards-scroll {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      padding: 0 20px;
-    }
-
-    .card {
-      background: #1c1c1e;
-      border: 2px solid transparent;
-      border-radius: 20px;
-      padding: 24px;
-      color: #fff;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s, border 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 18px rgba(255, 255, 255, 0.05);
-    }
-
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      border: 2px solid #4ADEDE;
-      box-shadow: 0 0 30px rgba(74, 222, 222, 0.3);
-    }
-
-    .card-icon {
-      font-size: 2.4em;
-      margin-bottom: 12px;
-      animation: floatIcon 2.5s ease-in-out infinite;
-    }
-
-    @keyframes floatIcon {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-6px);
-      }
-    }
-
-    .card-title {
-      font-size: 1.3em;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #4ADEDE;
-    }
-
-    .card-desc {
-      font-size: 0.95em;
-      line-height: 1.4;
-      color: #cfcfcf;
-    }
-
-    .card-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(45deg, #00ffc8, #4ADEDE);
-      color: #0d0d0d;
-      font-size: 0.75em;
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      box-shadow: 0 0 10px rgba(74, 222, 222, 0.4);
-    }
-
-    .card.coming-soon {
-      opacity: 0.7;
-      pointer-events: none;
-      background: #2a2a2a;
-      border: 2px dashed #4ADEDE50;
-    }
-
-    .card.coming-soon .card-badge {
-      background: linear-gradient(45deg, #ffd700, #ffa500);
-      color: #000;
-    }
-
-    @media (max-width: 600px) {
-      .typing-welcome {
-        font-size: 1.5em;
-      }
-
-      .cards-scroll {
-        grid-template-columns: 1fr;
-      }
+    .animate-bgGradient {
+      background: linear-gradient(120deg, #06b6d4 0%, #a21caf 50%, #f472b6 100%);
+      background-size: 200% 200%;
+      animation: bgGradientMove 12s ease-in-out infinite;
+      width: 100vw;
+      height: 100vh;
     }
   </style>
 </head>
 
-<body>
-
-  <!-- 🌈 Navbar -->
-  <nav class="navbar">
-    <div class="logo">
-      <span class="logo-icon">🤖</span>
+<body class="relative bg-black">
+  <!-- Animated gradient overlay -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="w-full h-full animate-bgGradient opacity-40"></div>
+  </div>
+  <!-- Background image as an <img> with absolute positioning -->
+  <img
+    alt="Futuristic AI neural network background with glowing green and blue nodes connected by lines on a dark blue gradient"
+    class="pointer-events-none select-none fixed inset-0 w-full h-full object-cover opacity-10 -z-10" height="1080"
+    src="https://storage.googleapis.com/a1aa/image/ae426548-2fc8-4b4c-0547-cc5c6c829a8c.jpg" width="1920" />
+  <nav
+    class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-5 md:px-10 py-4">
+    <button aria-label="Open AI Tools Sidebar"
+      class="text-cyan-400 bg-gray-900 hover:bg-gray-800 rounded-md px-3 py-2 text-xl md:text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      id="sidebarToggle">
+      ☰
+    </button>
+    <div class="flex items-center gap-3 text-white font-bold text-xl md:text-2xl select-none drop-shadow-md">
+      <span class="animate-pulse">🤖</span>
       <span>SmartTools AI</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="{{ url_for('home') }}">Home</a></li>
-      <li><a href="{{ url_for('about') }}">About</a></li>
-      <li><a href="{{ url_for('features') }}">Features</a></li>
-      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <ul
+      class="hidden md:flex gap-8 text-white font-medium text-sm md:text-base select-none drop-shadow-md tracking-wide">
+      <li>
+        <a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('home') }}">
+          Home
+        </a>
+      </li>
+      <li>
+        <a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('about') }}">
+          About
+        </a>
+      </li>
+      <li>
+        <a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('features') }}">
+          Features
+        </a>
+      </li>
+      <li>
+        <a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('contact') }}">
+          Contact
+        </a>
+      </li>
     </ul>
+
   </nav>
 
-  <!-- 🎯 Main Content -->
-  <div class="center-wrapper">
-    <div class="container">
-      <span class="ai-badge">✨ AI Multi Tool Project</span>
-      <div class="typing-welcome">
-        <span id="typing-text"></span><span class="typing-cursor"></span>
+  <!-- Sidebar overlay -->
+  <div class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 transition-opacity duration-300" id="sidebarOverlay">
+  </div>
+  <!-- Sidebar -->
+  <aside
+    class="fixed top-0 left-0 h-full w-80 max-w-[90vw] bg-gray-900 shadow-lg shadow-cyan-400/20 rounded-tr-3xl rounded-br-3xl p-8 flex flex-col gap-8 overflow-y-auto -translate-x-full transition-transform duration-300 z-50"
+    id="sidebar">
+    <button aria-label="Close Sidebar"
+      class="self-end text-cyan-400 bg-gray-800 hover:bg-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      id="sidebarClose">
+      ×
+    </button>
+    <h2 class="text-cyan-400 font-bold text-2xl tracking-wide select-none">
+      AI Tools
+    </h2>
+    <div class="flex flex-col gap-6">
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool1')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🖐️
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gesture Launcher
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Launch apps with hand gestures using AI.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
       </div>
-
-      <!-- Cards -->
-      <div class="cards-scroll">
-        <div class="card" onclick="gotoProject('/tool1')">
-          <div class="card-icon">🖐️</div>
-          <div class="card-title">Gesture Launcher</div>
-          <div class="card-desc">Launch apps with hand gestures using AI.</div>
-          <span class="card-badge">Active Project</span>
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool2')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🔫
         </div>
-        <div class="card" onclick="gotoProject('/tool2')">
-          <div class="card-icon">🔫</div>
-          <div class="card-title">Gun Detector</div>
-          <div class="card-desc">Detect guns in real-time using computer vision.</div>
-          <span class="card-badge">Active Project</span>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gun Detector
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Detect guns in real-time using computer vision.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+      <div
+        class="opacity-70 pointer-events-none bg-gray-700 border-2 border-dashed border-yellow-400 rounded-2xl p-6 text-white shadow-md shadow-yellow-400/30 select-none">
+        <div class="text-4xl mb-3 animate-bounce">
+          ✨
         </div>
-        <div class="card coming-soon">
-          <div class="card-icon">✨</div>
-          <div class="card-title">Coming Soon</div>
-          <div class="card-desc">Exciting new tools will be added soon. Stay tuned!</div>
-          <span class="card-badge">Upcoming</span>
-        </div>
+        <h3 class="text-xl font-semibold text-yellow-400 mb-1">
+          Coming Soon
+        </h3>
+        <p class="text-yellow-300 text-sm leading-relaxed">
+          Exciting new tools will be added soon. Stay tuned!
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black shadow-md shadow-yellow-400/50 select-none">
+          Upcoming
+        </span>
       </div>
     </div>
-  </div>
+  </aside>
+  <!-- Main content -->
+  <main class="pt-32 md:pt-40 px-5 md:px-10 max-w-7xl mx-auto min-h-screen relative z-10">
+    <div class="flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto gap-14 md:gap-20">
 
-  <!-- 🧠 Typing & Card Click Logic -->
+      <!-- Left: Typing animation and buttons -->
+      <div class="flex-1 flex flex-col items-start text-left space-y-6">
+        <!-- Badge -->
+        <span
+          class="inline-block px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold tracking-wide select-none shadow-md shadow-cyan-400/50 text-lg md:text-xl">
+          ✨ AI Multi Tool Project
+        </span>
+
+        <!-- Typing Text -->
+        <h1
+          class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 min-h-[3.5rem] leading-tight">
+          <span id="typing-text"></span>
+          <span class="typing-cursor"></span>
+        </h1>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap gap-4 mt-4">
+          <button
+            class="min-w-[140px] px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold shadow-lg shadow-cyan-400/40 hover:from-cyan-500 hover:to-teal-400 transition duration-300 ease-in-out transform hover:scale-105"
+            onclick="gotoProject('/tool1')">
+            🚀 Explore More
+          </button>
+          <button
+            class="min-w-[140px] px-6 py-3 rounded-lg bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold shadow-lg shadow-pink-400/40 hover:from-pink-500 hover:to-purple-500 transition duration-300 ease-in-out transform hover:scale-105"
+            onclick="window.location.href='#contact'">
+            📞 Contact Me
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="flex-1 flex justify-center items-center mt-12">
+        <img
+          alt="Abstract futuristic AI technology background with glowing neural network connections and digital data streams in blue and purple hues"
+          class="pointer-events-none select-none transform scale-110 md:scale-125 w-full h-auto" src="/static/ai.png" />
+      </div>
+    </div>
+
+    <!-- Optional: Contact section anchor -->
+    <div id="contact" class="mt-20"></div>
+  </main>
+
   <script>
+    // Typing effect (looping)
     const text = "Welcome to Smart AI Tools";
     let i = 0;
+    const typingText = document.getElementById("typing-text");
 
     function type() {
       if (i < text.length) {
-        document.getElementById("typing-text").innerHTML += text.charAt(i);
+        typingText.innerHTML += text.charAt(i);
         i++;
         setTimeout(type, 80);
+      } else {
+        setTimeout(() => {
+          typingText.innerHTML = "";
+          i = 0;
+          type();
+        }, 1000);
       }
     }
 
+    // Navigation to project
     function gotoProject(path) {
       window.location.href = path;
     }
 
+    // Sidebar toggle logic
+    const sidebar = document.getElementById("sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebarClose = document.getElementById("sidebarClose");
+
+    function openSidebar() {
+      sidebar.classList.add("translate-x-0");
+      sidebarOverlay.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove("translate-x-0");
+      sidebarOverlay.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    sidebarToggle.addEventListener("click", openSidebar);
+    sidebarClose.addEventListener("click", closeSidebar);
+    sidebarOverlay.addEventListener("click", closeSidebar);
+
     window.onload = type;
   </script>
-
 </body>
 
 </html>
