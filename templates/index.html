@@ -84,6 +84,27 @@
       width: 100vw;
       height: 100vh;
     }
+
+    .animate-slideInUp {
+      animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+
+    @keyframes slideInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+      }
+
+      60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.03);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
   </style>
 </head>
 
@@ -244,7 +265,7 @@
           <div class="bg-gradient-to-br from-cyan-400/30 via-purple-400/20 to-pink-400/20 rounded-2xl p-4 md:p-8 shadow-lg shadow-cyan-400/20">
             <img
               alt="Abstract futuristic AI technology background with glowing neural network connections and digital data streams in blue and purple hues"
-              class="pointer-events-none select-none transform scale-110 md:scale-125 w-full h-auto rounded-xl shadow-xl shadow-cyan-400/30"
+              class="pointer-events-none select-none transform scale-110 md:scale-125 w-full h-auto rounded-xl shadow-xl shadow-cyan-400/30 animate-slideInUp"
               src="/static/ai.png" />
           </div>
         </div>
