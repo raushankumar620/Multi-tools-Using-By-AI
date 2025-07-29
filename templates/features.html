@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Smart AI Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-desc {
+            font-size: 1em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="main-content">
+        <div class="container">
+            <h1>Features</h1>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✋</div>
+                    <div class="feature-title">Gesture Launcher</div>
+                    <div class="feature-desc">Control your favorite websites with intuitive hand gestures. Open Google, YouTube, Amazon, and more with simple finger combinations.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔫</div>
+                <div class="feature-title">Gun Detector</div>
+                <div class="feature-title">Advanced gesture recognition that detects gun-like hand positions with sound effects and visual feedback.</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📷</div>
+                <div class="feature-title">Real-time Camera</div>
+                <div class="feature-desc">Live camera feed with instant gesture recognition. No lag, no delay - just smooth, real-time interaction.</div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-title">Easy Controls</div>
+                <div class="feature-desc">Simple start/stop controls with visual feedback. User-friendly interface that anyone can master in seconds.</div>
+            </div>
+        </div>
+        
+        <a href="/" class="btn">← Back to Home</a>
+        </div>
+    </div> <!-- End main-content -->
+</body>
+</html>

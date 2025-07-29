@@ -65,7 +65,9 @@
     }
 
     @keyframes pulse {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: scale(1);
         opacity: 1;
       }
@@ -205,7 +207,9 @@
     }
 
     @keyframes floatIcon {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
 
@@ -274,10 +278,10 @@
       <span>SmartTools AI</span>
     </div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('features') }}">Features</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
     </ul>
   </nav>
 
