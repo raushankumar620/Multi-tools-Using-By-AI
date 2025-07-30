@@ -1,4 +1,3 @@
-# This script is no longer needed for browser-based hand gesture zoom.
 # Use the /tool3 page in your web app and click "Finger Zoom" to control zoom with your hand.
 
 import cv2
