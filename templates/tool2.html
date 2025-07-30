@@ -2,29 +2,417 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>Tool 2 - Gun Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background-color: #000000;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .animate-gradientMove {
+            animation: gradientMove 8s ease infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-bgGradient {
+            background: linear-gradient(120deg, #06b6d4 0%, #a21caf 50%, #f472b6 100%);
+            background-size: 200% 200%;
+            animation: bgGradientMove 12s ease-in-out infinite;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        @keyframes bgGradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-slideInUp {
+            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.95);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.03);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Existing tool2 styles below (unchanged) */
+        .container {
+            background: rgba(30, 32, 34, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 38px 32px 32px 32px;
+            max-width: 420px;
+            width: 100%;
+            margin: 40px auto;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1.2s cubic-bezier(.39, .575, .56, 1) both;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #facc15;
+            letter-spacing: 1px;
+            font-size: 2.1rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px #23252699;
+        }
+
+        p {
+            color: #d1d5db;
+            margin-bottom: 22px;
+        }
+
+        .tool-btn {
+            background: linear-gradient(90deg, #6366f1 0%, #232526 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            margin: 0 6px 10px 0;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #23252633;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .tool-btn:hover {
+            background: linear-gradient(90deg, #facc15 0%, #6366f1 100%);
+            color: #232526;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 16px #6366f155;
+        }
+
+        #stop-tool2-btn {
+            background: linear-gradient(90deg, #ef4444 0%, #232526 100%) !important;
+            color: #fff !important;
+        }
+
+        #stop-tool2-btn:hover {
+            background: linear-gradient(90deg, #facc15 0%, #ef4444 100%) !important;
+            color: #232526 !important;
+        }
+
+        #feedback {
+            margin-top: 18px;
+            color: #6366f1;
+            font-weight: 700;
+            min-height: 28px;
+            letter-spacing: 0.5px;
+            font-size: 1.08rem;
+            transition: color 0.3s;
+            animation: feedbackPop 0.7s;
+        }
+
+        @keyframes feedbackPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.08);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #video-container {
+            margin-top: 28px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: camFadeIn 1s;
+        }
+
+        @keyframes camFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #gun-video {
+            display: block;
+            margin: 0 auto;
+            max-width: 320px;
+            min-width: 220px;
+            min-height: 180px;
+            aspect-ratio: 16/9;
+            border: 4px solid #facc15;
+            border-radius: 16px;
+            box-shadow: 0 6px 32px #23252699, 0 0 0 8px #6366f133;
+            background: linear-gradient(135deg, #232526 60%, #6366f1 100%);
+            object-fit: cover;
+            transition: box-shadow 0.3s, border 0.3s;
+            animation: camFramePop 1.1s cubic-bezier(.39, .575, .56, 1) both;
+        }
+
+        @keyframes camFramePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+
+            70% {
+                opacity: 1;
+                transform: scale(1.08);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            color: #facc15;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0 2px 8px #6366f1;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container">
-        <h2>Tool 2: Gun Detector</h2>
-        <p>Run gun gesture detection here.</p>
-        <button class="tool-btn" onclick="launchTool2()">Start Gun Detector</button>
-        <div id="feedback" style="margin-top:18px; color:#6366f1; font-weight:600;"></div>
-        <a href="/">Back to Home</a>
+<body class="relative bg-black">
+    <!-- Animated gradient overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="w-full h-full animate-bgGradient opacity-40"></div>
     </div>
+    <!-- Background image as an <img> with absolute positioning -->
+    <img alt="Futuristic AI neural network background with glowing green and blue nodes connected by lines on a dark blue gradient"
+        class="pointer-events-none select-none fixed inset-0 w-full h-full object-cover opacity-10 -z-10" height="1080"
+        src="https://storage.googleapis.com/a1aa/image/ae426548-2fc8-4b4c-0547-cc5c6c829a8c.jpg" width="1920" />
+    <nav
+        class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-5 md:px-10 py-4">
+        <button aria-label="Open AI Tools Sidebar"
+            class="text-cyan-400 bg-gray-900 hover:bg-gray-800 rounded-md px-3 py-2 text-xl md:text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            id="sidebarToggle">☰</button>
+        <ul
+            class="hidden md:flex gap-8 text-white font-medium text-sm md:text-base select-none drop-shadow-md tracking-wide">
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/">Home</a></li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/about">About</a></li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/features">Features</a>
+            </li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/contact">Contact</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Sidebar overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 transition-opacity duration-300" id="sidebarOverlay">
+    </div>
+    <!-- Sidebar -->
+    <aside
+        class="fixed top-0 left-0 h-full w-80 max-w-[90vw] bg-gray-900 shadow-lg shadow-cyan-400/20 rounded-tr-3xl rounded-br-3xl p-8 flex flex-col gap-8 overflow-y-auto -translate-x-full transition-transform duration-300 z-50"
+        id="sidebar">
+        <button aria-label="Close Sidebar"
+            class="self-end text-cyan-400 bg-gray-800 hover:bg-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            id="sidebarClose">×</button>
+        <h2 class="text-cyan-400 font-bold text-2xl tracking-wide select-none">AI Tools</h2>
+        <div class="flex flex-col gap-6">
+            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+                onclick="gotoProject('/tool1')">
+                <div class="text-4xl mb-3 animate-bounce">🖐️</div>
+                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Gesture Launcher</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Launch apps with hand gestures using AI.</p>
+                <span
+                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
+                    Project</span>
+            </div>
+            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+                onclick="gotoProject('/tool3')">
+                <div class="text-4xl mb-3 animate-bounce">🔍</div>
+                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Zoom In/Out Tool</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Zoom in and out of images using AI. </p>
+                <span
+                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
+                    Project</span>
+            </div>
+            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+                onclick="gotoProject('/tool2')">
+                <div class="text-4xl mb-3 animate-bounce">🔫</div>
+                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Gun Detector</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">Detect guns in real-time using computer vision.</p>
+                <span
+                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
+                    Project</span>
+            </div>
+            <div
+                class="opacity-70 pointer-events-none bg-gray-700 border-2 border-dashed border-yellow-400 rounded-2xl p-6 text-white shadow-md shadow-yellow-400/30 select-none">
+                <div class="text-4xl mb-3 animate-bounce">✨</div>
+                <h3 class="text-xl font-semibold text-yellow-400 mb-1">Coming Soon</h3>
+                <p class="text-yellow-300 text-sm leading-relaxed">Exciting new tools will be added soon. Stay tuned!
+                </p>
+                <span
+                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black shadow-md shadow-yellow-400/50 select-none">Upcoming</span>
+            </div>
+        </div>
+    </aside>
+    <!-- Main content -->
+    <main class="pt-32 md:pt-40 px-0 max-w-none mx-auto min-h-screen relative z-10 flex flex-col items-center">
+        <div class="w-full flex flex-col items-center justify-center mx-auto gap-0">
+            <!-- ...existing code... -->
+            <div class="container"
+                style="max-width: 540px; width: 100%; margin: 48px auto; text-align: center; background: linear-gradient(135deg, #18181b 80%, #06b6d4 100%); box-shadow: 0 8px 32px 0 #06b6d455, 0 0 0 8px #6366f133; border-radius: 28px; padding: 48px 36px 40px 36px;">
+                <h2
+                    style="font-size: 2.7rem; color: #06b6d4; font-weight: bold; letter-spacing: 2px; margin-bottom: 18px; text-shadow: 0 4px 18px #06b6d4cc, 0 2px 8px #23252699; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                    <span style="font-size: 2.5rem;">🔫</span> Gun Detector
+                </h2>
+                <p style="font-size: 1.25rem; color: #e0e7ef; margin-bottom: 30px; text-align: center;">Run gun gesture
+                    detection here.<br>The camera will open in the center frame below.</p>
+                <div style="display: flex; justify-content: center; gap: 18px; margin-bottom: 18px;">
+                    <button class="tool-btn"
+                        style="font-size: 1.18rem; padding: 14px 36px; border-radius: 12px; background: linear-gradient(90deg, #06b6d4 0%, #6366f1 100%); color: #fff; box-shadow: 0 2px 12px #06b6d4aa;"
+                        onclick="launchTool2()">Start Gun Detector</button>
+                    <button class="tool-btn" id="stop-tool2-btn"
+                        style="display:none; font-size: 1.18rem; padding: 14px 36px; border-radius: 12px; background: linear-gradient(90deg, #ef4444 0%, #232526 100%) !important; color: #fff !important; box-shadow: 0 2px 12px #ef4444aa;"
+                        onclick="stopTool2()">Stop</button>
+                </div>
+                <div id="feedback"
+                    style="margin-top: 22px; color: #06b6d4; font-weight: 800; min-height: 32px; letter-spacing: 1px; font-size: 1.18rem; text-align: center; text-shadow: 0 2px 8px #06b6d4cc;">
+                </div>
+                <div id="video-container"
+                    style="margin-top: 36px; display: none; justify-content: center; align-items: center; animation: camFadeIn 1s;">
+                    <img id="gun-video" src="" alt="Camera feed will appear here"
+                        style="display: block; margin: 0 auto; max-width: 400px; min-width: 260px; min-height: 180px; aspect-ratio: 16/9; border: 5px solid #06b6d4; border-radius: 20px; box-shadow: 0 8px 32px #06b6d4cc, 0 0 0 8px #6366f133; background: linear-gradient(135deg, #232526 60%, #6366f1 100%); object-fit: cover; transition: box-shadow 0.3s, border 0.3s;" />
+                </div>
+                <a href="/"
+                    style="margin-top: 36px; color: #06b6d4; text-decoration: none; font-weight: 700; font-size: 1.18rem; transition: color 0.2s; display: inline-block;">&larr;
+                    Back to Home</a>
+            </div>
+            <!-- ...existing code... -->
+        </div>
+    </main>
     <script>
+        // Navigation to project
+        function gotoProject(path) {
+            window.location.href = path;
+        }
+        // Sidebar toggle logic
+        const sidebar = document.getElementById("sidebar");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+        const sidebarClose = document.getElementById("sidebarClose");
+        function openSidebar() {
+            sidebar.classList.add("translate-x-0");
+            sidebarOverlay.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+        function closeSidebar() {
+            sidebar.classList.remove("translate-x-0");
+            sidebarOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+        sidebarToggle.addEventListener("click", openSidebar);
+        sidebarClose.addEventListener("click", closeSidebar);
+        sidebarOverlay.addEventListener("click", closeSidebar);
+        // Existing tool2 logic
         function launchTool2() {
             document.getElementById('feedback').textContent = 'Starting...';
             fetch('/run_tool2', { method: 'POST' })
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById('feedback').textContent = data.msg;
+                    if (data.status === 'success' || data.status === 'running') {
+                        document.getElementById('video-container').style.display = 'block';
+                        document.getElementById('gun-video').src = '/tool2_video_feed?' + new Date().getTime();
+                        document.getElementById('stop-tool2-btn').style.display = 'inline-block';
+                    }
                 })
                 .catch(() => {
                     document.getElementById('feedback').textContent = 'Error starting tool.';
+                });
+        }
+        function stopTool2() {
+            fetch('/stop_tool2', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('feedback').textContent = data.msg;
+                    document.getElementById('video-container').style.display = 'none';
+                    document.getElementById('gun-video').src = '';
+                    document.getElementById('stop-tool2-btn').style.display = 'none';
+                })
+                .catch(() => {
+                    document.getElementById('feedback').textContent = 'Error stopping tool.';
                 });
         }
     </script>

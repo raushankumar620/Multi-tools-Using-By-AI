@@ -1,5 +1,6 @@
 # app.py
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
+
 import subprocess
 import os
 import signal
@@ -7,6 +8,13 @@ import sys
 import threading # Use threading for better control over the subprocess
 from werkzeug.utils import secure_filename
 import time
+
+# For tool2 gun detector
+import cv2
+from cvzone.HandTrackingModule import HandDetector
+import numpy as np
+import threading as py_threading
+from playsound import playsound
 
 app = Flask(__name__)
 
@@ -26,6 +34,54 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 tool3_zoom_scale = 1.0
 tool3_zoom_thread = None
 tool3_zoom_running = False
+
+# For tool2 gun detector video stream
+tool2_video_running = False
+tool2_video_lock = py_threading.Lock()
+tool2_fire_effect = False
+tool2_fire_counter = 0
+
+def play_fire_sound():
+    sound_path = os.path.join(os.path.dirname(__file__), 'static', 'sound.mp3')
+    py_threading.Thread(target=playsound, args=(sound_path,), daemon=True).start()
+
+def gen_tool2_frames():
+    global tool2_video_running, tool2_fire_effect, tool2_fire_counter
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 1280)
+    cap.set(4, 720)
+    detector = HandDetector(detectionCon=0.8, maxHands=1)
+    tool2_video_running = True
+    while tool2_video_running:
+        success, img = cap.read()
+        if not success:
+            continue
+        img = cv2.flip(img, 1)
+        hands, img = detector.findHands(img)
+        if hands:
+            hand = hands[0]
+            lmList = hand['lmList']
+            thumb_tip = lmList[4]
+            index_tip = lmList[8]
+            middle_tip = lmList[12]
+            thumb_up = thumb_tip[1] < lmList[3][1]
+            index_up = index_tip[1] < lmList[6][1]
+            middle_down = middle_tip[1] > lmList[10][1]
+            if thumb_up and index_up and middle_down:
+                tool2_fire_effect = True
+                tool2_fire_counter = 5
+                play_fire_sound()
+        if tool2_fire_effect:
+            tool2_fire_counter -= 1
+            cv2.putText(img, "FIRE!", (600, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
+            if tool2_fire_counter <= 0:
+                tool2_fire_effect = False
+        # Encode frame as JPEG
+        ret, buffer = cv2.imencode('.jpg', img)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    cap.release()
 
 @app.route('/')
 def home():
@@ -123,15 +179,32 @@ def stop_gesture():
 
 @app.route('/run_tool2', methods=['POST'])
 def run_tool2():
-    try:
-        script_path = os.path.join(os.path.dirname(__file__), 'tools', 'tool2_gun_detector.py')
-        # Similar considerations for tool2: if it has a GUI, it might not show up.
-        # For simplicity, keeping it as is, but be aware.
-        subprocess.Popen(['python', script_path])
-        return jsonify({'status': 'success', 'msg': 'Gun Detector started.'})
-    except Exception as e:
-        print(f"Error running tool2: {e}", file=sys.stderr)
-        return jsonify({'status': 'error', 'msg': f'Error: {str(e)}'})
+    global tool2_video_running
+    with tool2_video_lock:
+        if not tool2_video_running:
+            tool2_video_running = True
+            return jsonify({'status': 'success', 'msg': 'Gun Detector started. Camera feed below.'})
+        else:
+            return jsonify({'status': 'running', 'msg': 'Gun Detector already running.'})
+
+
+
+# Route to stream the video feed for tool2
+@app.route('/tool2_video_feed')
+def tool2_video_feed():
+    global tool2_video_running
+    with tool2_video_lock:
+        if not tool2_video_running:
+            tool2_video_running = True
+    return Response(gen_tool2_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# Route to stop the video feed for tool2
+@app.route('/stop_tool2', methods=['POST'])
+def stop_tool2():
+    global tool2_video_running
+    with tool2_video_lock:
+        tool2_video_running = False
+    return jsonify({'status': 'stopped', 'msg': 'Gun Detector stopped.'})
 
 @app.route('/tool3_upload', methods=['POST'])
 def tool3_upload():
@@ -196,8 +269,9 @@ def tool3_stop_zoom():
 
 if __name__ == '__main__':
     # Ensure all OpenCV windows are closed if the server is stopped
+
     def shutdown_server(signal, frame):
-        global gesture_process
+        global gesture_process, tool2_video_running
         with process_lock:
             if gesture_process and gesture_process.poll() is None:
                 print("Server shutting down, attempting to terminate gesture process.", file=sys.stderr)
@@ -211,6 +285,8 @@ if __name__ == '__main__':
                     gesture_process.kill()
                 except Exception as e:
                     print(f"Error during server shutdown termination: {e}", file=sys.stderr)
+        # Also stop tool2 video stream on shutdown
+        tool2_video_running = False
         print("Flask server shutting down.", file=sys.stderr)
         sys.exit(0)
 
