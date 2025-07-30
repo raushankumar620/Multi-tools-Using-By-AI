@@ -1,179 +1,369 @@
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <title>
-        AI Cards with Animated Gradient Background
-    </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <title>About - Smart AI Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&amp;display=swap" rel="stylesheet" />
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #000000;
+            color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
+            position: relative;
         }
-
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(270deg, #6b46c1, #b794f4, #805ad5, #d6bcfa);
-            background-size: 800% 800%;
-            animation: gradientShift 20s ease infinite;
-            z-index: -1;
-            filter: brightness(0.85);
+        .animate-gradientMove {
+            animation: gradientMove 8s ease infinite;
+            background-size: 300% 300%;
         }
-
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-bgGradient {
+            background: linear-gradient(120deg, #06b6d4 0%, #a21caf 50%, #f472b6 100%);
+            background-size: 200% 200%;
+            animation: bgGradientMove 12s ease-in-out infinite;
+            width: 100vw;
+            height: 100vh;
+        }
+        @keyframes bgGradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-slideInUp {
+            animation: slideInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+        @keyframes slideInUp {
+            0% { opacity: 0; transform: translateY(60px) scale(0.95); }
+            60% { opacity: 1; transform: translateY(-8px) scale(1.03); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-start p-6 relative">
-    <div class="animated-bg">
+<body class="relative bg-black">
+    <!-- Animated gradient overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="w-full h-full animate-bgGradient opacity-40"></div>
     </div>
-    <header class="mb-10 text-center max-w-4xl">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg">
-            Explore Cutting-Edge AI Technologies
-        </h1>
-        <p class="mt-3 text-lg text-purple-200 max-w-xl mx-auto">
-            Discover innovative AI solutions transforming the future across various domains.
-        </p>
-    </header>
-    <main class="max-w-7xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="A futuristic AI robot with glowing blue interface and digital data streams"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/8ebc2b16-df72-49f5-3147-263fde7e2114.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    AI Robot Assistant
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    An intelligent robot assistant designed to help with daily tasks using advanced AI algorithms.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="Visualization of an AI brain network with interconnected nodes and glowing neural pathways"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/91c06b82-78b4-42a7-ccd1-f10789e227bb.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    Neural Network AI
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    A deep learning neural network model that mimics human brain functions for complex problem solving.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="Mobile phone screen showing an AI chatbot interface with conversation bubbles and user interaction"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/038a8b0d-72e1-4f20-0424-cfe98be76087.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    Conversational AI Chatbot
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    An AI-powered chatbot that understands natural language and provides human-like responses instantly.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="A modern AI data analytics dashboard with colorful charts, graphs, and real-time data insights"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/44dfc3db-e57e-4b59-b905-d832b4c79008.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    AI Data Analytics
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    Advanced AI tools for analyzing big data and generating actionable insights through visual
-                    dashboards.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="AI-powered autonomous drone flying over a cityscape at sunset with glowing sensors"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/6d8cbfcb-9522-43d5-7d15-6df39ef36032.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    Hands-Free AI Interaction
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    A drone equipped with AI for autonomous navigation and real-time data collection.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="AI-powered medical imaging system analyzing X-ray scans with precision"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/90d85ee9-2565-400b-a2af-03f1db0bdb3d.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    Gesture & Gaze Technology
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    AI system that assists doctors by analyzing medical images for faster and accurate diagnosis.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="AI-powered smart home system controlling lights, temperature, and security"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/54d4d507-64ee-4384-a1bf-904696ca9075.jpg" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    AI Voice Assistant
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    AI system that automates and optimizes home environment for comfort and energy efficiency.
-                </p>
-            </div>
-        </div>
-        <div
-            class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-            <img alt="AI-powered financial trading platform showing real-time stock market data and predictions"
-                class="w-full h-56 object-cover" height="250"
-                src="https://storage.googleapis.com/a1aa/image/0b62c071-b2d0-4a46-83a1-3557335e6ad9.jpg" width="400" width="400" />
-            <div class="p-5">
-                <h2 class="text-2xl font-semibold mb-2 text-gray-900">
-                    AI Code Helper
+    <!-- Background image as an <img> with absolute positioning -->
+    <img alt="Futuristic AI neural network background with glowing green and blue nodes connected by lines on a dark blue gradient"
+        class="pointer-events-none select-none fixed inset-0 w-full h-full object-cover opacity-10 -z-10" height="1080"
+        src="https://storage.googleapis.com/a1aa/image/ae426548-2fc8-4b4c-0547-cc5c6c829a8c.jpg" width="1920" />
+    <nav
+        class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-5 md:px-10 py-4">
+        <button aria-label="Open AI Tools Sidebar"
+            class="text-cyan-400 bg-gray-900 hover:bg-gray-800 rounded-md px-3 py-2 text-xl md:text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            id="sidebarToggle">☰</button>
+        <ul
+            class="hidden md:flex gap-8 text-white font-medium text-sm md:text-base select-none drop-shadow-md tracking-wide">
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/">Home</a></li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/about">About</a></li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/features">Features</a></li>
+            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- Sidebar overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 transition-opacity duration-300" id="sidebarOverlay">
+    </div>
+    <!-- Sidebar -->
+  <aside
+    class="fixed top-0 left-0 h-full w-80 max-w-[90vw] bg-gray-900 shadow-lg shadow-cyan-400/20 rounded-tr-3xl rounded-br-3xl p-8 flex flex-col gap-8 overflow-y-auto -translate-x-full transition-transform duration-300 z-50"
+    id="sidebar">
+    <button aria-label="Close Sidebar"
+      class="self-end text-cyan-400 bg-gray-800 hover:bg-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      id="sidebarClose">
+      ×
+    </button>
 
-                </h2>
-                <p class="text-gray-700 text-sm">
-                    AI algorithms that analyze market trends and execute trades for optimized financial returns.
+    <h2 class="text-cyan-400 font-bold text-2xl tracking-wide select-none">
+      AI Tools
+    </h2>
+    <div class="flex flex-col gap-6">
+          <div
+        class="opacity-70 pointer-events-none bg-gray-700 border-2 border-dashed border-yellow-400 rounded-2xl p-6 text-white shadow-md shadow-yellow-400/30 select-none">
+        <div class="text-4xl mb-3 animate-bounce">
+          ✨
+        </div>
+        <h3 class="text-xl font-semibold text-yellow-400 mb-1">
+          Coming Soon
+        </h3>
+        <p class="text-yellow-300 text-sm leading-relaxed">
+          Exciting new tools will be added soon. Stay tuned!
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black shadow-md shadow-yellow-400/50 select-none">
+          Upcoming
+        </span>
+      </div>
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool1')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🖐️
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gesture Launcher
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Launch apps with hand gestures using AI.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+        <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool3')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🔍
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Zoom In/Out Tool
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Zoom in and out of images using AI. 
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool2')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🔫
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gun Detector
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Detect guns in real-time using computer vision.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+  
+    </div>
+  </aside>
+    <main class="pt-32 md:pt-40 px-0 max-w-none mx-auto min-h-screen relative z-10 flex flex-col items-center">
+        <div class="w-full flex flex-col items-center justify-center mx-auto gap-0">
+            <header class="mb-10 text-center max-w-4xl">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-lg">
+                    Explore Cutting-Edge AI Technologies
+                </h1>
+                <p class="mt-3 text-lg text-purple-200 max-w-xl mx-auto">
+                    Discover innovative AI solutions transforming the future across various domains.
                 </p>
-            </div>
+            </header>
+            <main class="max-w-7xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Animated Cards -->
+                <div class="ai-card">
+                    <img alt="A futuristic AI robot with glowing blue interface and digital data streams"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/8ebc2b16-df72-49f5-3147-263fde7e2114.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            AI Robot Assistant
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            An intelligent robot assistant designed to help with daily tasks using advanced AI algorithms.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="Visualization of an AI brain network with interconnected nodes and glowing neural pathways"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/91c06b82-78b4-42a7-ccd1-f10789e227bb.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            Neural Network AI
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            A deep learning neural network model that mimics human brain functions for complex problem solving.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="Mobile phone screen showing an AI chatbot interface with conversation bubbles and user interaction"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/038a8b0d-72e1-4f20-0424-cfe98be76087.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            Conversational AI Chatbot
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            An AI-powered chatbot that understands natural language and provides human-like responses instantly.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="A modern AI data analytics dashboard with colorful charts, graphs, and real-time data insights"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/44dfc3db-e57e-4b59-b905-d832b4c79008.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            AI Data Analytics
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            Advanced AI tools for analyzing big data and generating actionable insights through visual dashboards.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="AI-powered autonomous drone flying over a cityscape at sunset with glowing sensors"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/6d8cbfcb-9522-43d5-7d15-6df39ef36032.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            Hands-Free AI Interaction
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            A drone equipped with AI for autonomous navigation and real-time data collection.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="AI-powered medical imaging system analyzing X-ray scans with precision"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/90d85ee9-2565-400b-a2af-03f1db0bdb3d.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            Gesture & Gaze Technology
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            AI system that assists doctors by analyzing medical images for faster and accurate diagnosis.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="AI-powered smart home system controlling lights, temperature, and security"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/54d4d507-64ee-4384-a1bf-904696ca9075.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            AI Voice Assistant
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            AI system that automates and optimizes home environment for comfort and energy efficiency.
+                        </p>
+                    </div>
+                </div>
+                <div class="ai-card">
+                    <img alt="AI-powered financial trading platform showing real-time stock market data and predictions"
+                        class="w-full h-56 object-cover" height="250"
+                        src="https://storage.googleapis.com/a1aa/image/0b62c071-b2d0-4a46-83a1-3557335e6ad9.jpg" width="400" />
+                    <div class="p-5">
+                        <h2 class="text-2xl font-semibold mb-2 text-gray-900">
+                            AI Code Helper
+                        </h2>
+                        <p class="text-gray-700 text-sm">
+                            AI algorithms that analyze market trends and execute trades for optimized financial returns.
+                        </p>
+                    </div>
+                </div>
+            </main>
         </div>
     </main>
+    <script>
+        // Navigation to project
+        function gotoProject(path) {
+            window.location.href = path;
+        }
+        // Sidebar toggle logic
+        const sidebar = document.getElementById("sidebar");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+        const sidebarClose = document.getElementById("sidebarClose");
+        function openSidebar() {
+            sidebar.classList.add("translate-x-0");
+            sidebarOverlay.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+        function closeSidebar() {
+            sidebar.classList.remove("translate-x-0");
+            sidebarOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+        sidebarToggle.addEventListener("click", openSidebar);
+        sidebarClose.addEventListener("click", closeSidebar);
+        sidebarOverlay.addEventListener("click", closeSidebar);
+
+        // Card entrance animation
+        document.addEventListener("DOMContentLoaded", function () {
+            const cards = document.querySelectorAll('.ai-card');
+            cards.forEach((card, i) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(60px) scale(0.95)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1)';
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 200 + i * 120);
+            });
+        });
+    </script>
+</body>
+<style>
+    .ai-card {
+        background: rgba(255,255,255,0.92);
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px 0 rgba(6,182,212,0.12), 0 1.5px 6px 0 rgba(162,28,175,0.10);
+        overflow: hidden;
+        transition: box-shadow 0.4s cubic-bezier(0.23,1,0.32,1), transform 0.4s cubic-bezier(0.23,1,0.32,1), background 0.4s;
+        position: relative;
+        cursor: pointer;
+        z-index: 1;
+    }
+    .ai-card:hover {
+        box-shadow: 0 16px 48px 0 rgba(6,182,212,0.25), 0 4px 24px 0 rgba(162,28,175,0.18);
+        transform: translateY(-8px) scale(1.04) rotateZ(-1deg);
+        background: linear-gradient(120deg, #f472b6 0%, #a21caf 50%, #06b6d4 100%);
+    }
+    .ai-card img {
+        transition: filter 0.4s, transform 0.4s;
+    }
+    .ai-card:hover img {
+        filter: brightness(1.08) saturate(1.2) drop-shadow(0 0 12px #06b6d4cc);
+        transform: scale(1.04) rotateZ(1deg);
+    }
+    .ai-card .p-5 {
+        transition: color 0.4s;
+    }
+    .ai-card:hover .p-5 {
+        color: #fff;
+    }
+    .ai-card h2 {
+        transition: color 0.4s;
+    }
+    .ai-card:hover h2 {
+        color: #fff;
+        text-shadow: 0 2px 12px #a21caf99;
+    }
+    .ai-card p {
+        transition: color 0.4s;
+    }
+    .ai-card:hover p {
+        color: #e0e7ff;
+    }
+</style>
 </body>
 
 </html>

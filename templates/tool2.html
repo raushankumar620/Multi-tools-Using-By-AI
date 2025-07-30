@@ -281,52 +281,92 @@
     <div class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 transition-opacity duration-300" id="sidebarOverlay">
     </div>
     <!-- Sidebar -->
-    <aside
-        class="fixed top-0 left-0 h-full w-80 max-w-[90vw] bg-gray-900 shadow-lg shadow-cyan-400/20 rounded-tr-3xl rounded-br-3xl p-8 flex flex-col gap-8 overflow-y-auto -translate-x-full transition-transform duration-300 z-50"
-        id="sidebar">
-        <button aria-label="Close Sidebar"
-            class="self-end text-cyan-400 bg-gray-800 hover:bg-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
-            id="sidebarClose">×</button>
-        <h2 class="text-cyan-400 font-bold text-2xl tracking-wide select-none">AI Tools</h2>
-        <div class="flex flex-col gap-6">
-            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
-                onclick="gotoProject('/tool1')">
-                <div class="text-4xl mb-3 animate-bounce">🖐️</div>
-                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Gesture Launcher</h3>
-                <p class="text-gray-300 text-sm leading-relaxed">Launch apps with hand gestures using AI.</p>
-                <span
-                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
-                    Project</span>
-            </div>
-            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
-                onclick="gotoProject('/tool3')">
-                <div class="text-4xl mb-3 animate-bounce">🔍</div>
-                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Zoom In/Out Tool</h3>
-                <p class="text-gray-300 text-sm leading-relaxed">Zoom in and out of images using AI. </p>
-                <span
-                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
-                    Project</span>
-            </div>
-            <div class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
-                onclick="gotoProject('/tool2')">
-                <div class="text-4xl mb-3 animate-bounce">🔫</div>
-                <h3 class="text-xl font-semibold text-cyan-400 mb-1">Gun Detector</h3>
-                <p class="text-gray-300 text-sm leading-relaxed">Detect guns in real-time using computer vision.</p>
-                <span
-                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">Active
-                    Project</span>
-            </div>
-            <div
-                class="opacity-70 pointer-events-none bg-gray-700 border-2 border-dashed border-yellow-400 rounded-2xl p-6 text-white shadow-md shadow-yellow-400/30 select-none">
-                <div class="text-4xl mb-3 animate-bounce">✨</div>
-                <h3 class="text-xl font-semibold text-yellow-400 mb-1">Coming Soon</h3>
-                <p class="text-yellow-300 text-sm leading-relaxed">Exciting new tools will be added soon. Stay tuned!
-                </p>
-                <span
-                    class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black shadow-md shadow-yellow-400/50 select-none">Upcoming</span>
-            </div>
+   <aside
+    class="fixed top-0 left-0 h-full w-80 max-w-[90vw] bg-gray-900 shadow-lg shadow-cyan-400/20 rounded-tr-3xl rounded-br-3xl p-8 flex flex-col gap-8 overflow-y-auto -translate-x-full transition-transform duration-300 z-50"
+    id="sidebar">
+    <button aria-label="Close Sidebar"
+      class="self-end text-cyan-400 bg-gray-800 hover:bg-gray-700 rounded-full w-9 h-9 flex items-center justify-center text-2xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
+      id="sidebarClose">
+      ×
+    </button>
+
+    <h2 class="text-cyan-400 font-bold text-2xl tracking-wide select-none">
+      AI Tools
+    </h2>
+    <div class="flex flex-col gap-6">
+          <div
+        class="opacity-70 pointer-events-none bg-gray-700 border-2 border-dashed border-yellow-400 rounded-2xl p-6 text-white shadow-md shadow-yellow-400/30 select-none">
+        <div class="text-4xl mb-3 animate-bounce">
+          ✨
         </div>
-    </aside>
+        <h3 class="text-xl font-semibold text-yellow-400 mb-1">
+          Coming Soon
+        </h3>
+        <p class="text-yellow-300 text-sm leading-relaxed">
+          Exciting new tools will be added soon. Stay tuned!
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-yellow-400 to-yellow-300 text-black shadow-md shadow-yellow-400/50 select-none">
+          Upcoming
+        </span>
+      </div>
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool1')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🖐️
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gesture Launcher
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Launch apps with hand gestures using AI.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+        <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool3')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🔍
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Zoom In/Out Tool
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Zoom in and out of images using AI. 
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+      <div
+        class="cursor-pointer bg-gray-800 rounded-2xl p-6 text-white shadow-md shadow-cyan-400/30 hover:shadow-cyan-400/60 hover:scale-[1.03] transition-transform border-2 border-transparent hover:border-cyan-400 select-none"
+        onclick="gotoProject('/tool2')">
+        <div class="text-4xl mb-3 animate-bounce">
+          🔫
+        </div>
+        <h3 class="text-xl font-semibold text-cyan-400 mb-1">
+          Gun Detector
+        </h3>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Detect guns in real-time using computer vision.
+        </p>
+        <span
+          class="inline-block mt-4 px-3 py-1 text-xs font-semibold uppercase rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black shadow-md shadow-cyan-400/50 select-none">
+          Active
+          Project
+        </span>
+      </div>
+  
+    </div>
+  </aside>
     <!-- Main content -->
     <main class="pt-32 md:pt-40 px-0 max-w-none mx-auto min-h-screen relative z-10 flex flex-col items-center">
         <div class="w-full flex flex-col items-center justify-center mx-auto gap-0">
