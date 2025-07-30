@@ -11,6 +11,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&amp;display=swap" rel="stylesheet" />
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #000000;
@@ -105,6 +109,23 @@
         transform: translateY(0) scale(1);
       }
     }
+
+    #typing-cursor {
+      animation: blink-cursor 1s steps(1) infinite;
+      border-radius: 1px;
+    }
+
+    @keyframes blink-cursor {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
@@ -125,10 +146,7 @@
       id="sidebarToggle">
       ☰
     </button>
-    <div class="flex items-center gap-3 text-white font-bold text-xl md:text-2xl select-none drop-shadow-md">
-      <span class="animate-pulse">🤖</span>
-      <span>SmartTools AI</span>
-    </div>
+
     <ul
       class="hidden md:flex gap-8 text-white font-medium text-sm md:text-base select-none drop-shadow-md tracking-wide">
       <li>
@@ -226,43 +244,66 @@
     </div>
   </aside>
   <!-- Main content -->
-  <main class="pt-32 md:pt-40 px-5 md:px-10 max-w-7xl mx-auto min-h-screen relative z-10">
-    <div class="flex flex-col md:flex-row items-center justify-center max-w-5xl mx-auto gap-14 md:gap-20">
-
+  <main class="pt-32 md:pt-40 px-0 max-w-none mx-auto min-h-screen relative z-10 flex flex-col items-center">
+    <div class="w-full flex flex-col items-center justify-center mx-auto gap-0">
       <!-- Main Card Section Start -->
-      <div class="w-full max-w-6xl flex flex-col md:flex-row bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl shadow-cyan-400/20 border border-cyan-400/20 p-10 md:p-20 gap-12 md:gap-20 items-center">
-        <!-- Left: Typing animation and buttons -->
-        <div class="flex-1 flex flex-col items-start text-left space-y-6">
-          <!-- Badge -->
-          <span
-            class="inline-block px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold tracking-wide select-none shadow-md shadow-cyan-400/50 text-lg md:text-xl">
-            ✨ AI Multi Tool Project
-          </span>
+      <div
+        class="w-full flex flex-col lg:flex-row bg-white/10 backdrop-blur-lg border border-cyan-400/20 p-0 items-center absolute left-0 right-0 mx-auto z-50"
+        style="top:5rem;max-width:100vw;">
 
-          <!-- Typing Text -->
+        <!-- Left: Typing animation and buttons -->
+        <div class="w-full lg:w-1/2 flex flex-col items-start text-left gap-8 p-8 md:p-16 lg:p-20">
+          <!-- Badge -->
+
+
+          <!-- Typing Text with animation -->
           <h1
-            class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 min-h-[3.5rem] leading-tight drop-shadow-lg">
-            Smart AI Tools – Unlock the Power of Intelligence
+            class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 leading-snug tracking-wide drop-shadow-lg px-2 w-fit text-balance text-left">
+            Smart AI Tools
+            <div class="flex flex-row flex-nowrap items-baseline whitespace-nowrap">
+              Unlock the Power of&nbsp;
+              <span id="typing-word" class="text-red-400"></span>
+              <span id="typing-cursor" class="inline-block w-1 h-[1.2em] align-bottom ml-1 bg-cyan-400"></span>
+            </div>
           </h1>
 
+          <!-- Short Description -->
+          <div class="w-full flex justify-start">
+            <div
+              class="max-w-2xl w-full bg-gradient-to-br from-cyan-900/60 via-purple-900/40 to-pink-900/30 rounded-2xl shadow-xl shadow-cyan-400/20 border border-cyan-400/30 px-8 py-8 flex flex-col items-start gap-4 backdrop-blur-md">
+              <p class="text-2xl md:text-3xl font-bold text-cyan-200 text-left leading-snug drop-shadow-lg">
+                🚀 Discover a suite of intelligent <span class="text-cyan-300 font-extrabold">AI-powered tools</span>
+                designed to
+                boost your productivity and creativity.
+              </p>
+              <p class="text-xl md:text-2xl font-semibold text-pink-300 text-left mt-2 drop-shadow-lg">
+                🔮 <span class="text-pink-400 font-extrabold">Experience the future, today.</span>
+              </p>
+            </div>
+          </div>
+
           <!-- Buttons -->
-          <div class="w-full flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+          <div class="w-full flex flex-wrap justify-start gap-8 mt-6">
+            <!-- Explore More -->
             <button
-              class="min-w-[140px] px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold shadow-lg shadow-cyan-400/40 hover:from-cyan-500 hover:to-teal-400 transition duration-300 ease-in-out transform hover:scale-105"
-              onclick="gotoProject('/tool1')">
-              🚀 Explore More
+              class="min-w-[160px] px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold shadow-lg shadow-cyan-400/40 hover:from-cyan-500 hover:to-teal-400 transition duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2 group">
+              <span class="transition-all duration-300 group-hover:translate-x-1">🚀</span> Explore More
             </button>
+
+            <!-- Contact Me -->
             <button
-              class="min-w-[140px] px-6 py-3 rounded-lg bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold shadow-lg shadow-pink-400/40 hover:from-pink-500 hover:to-purple-500 transition duration-300 ease-in-out transform hover:scale-105"
+              class="min-w-[160px] px-6 py-3 rounded-lg bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold shadow-lg shadow-pink-400/40 hover:from-pink-500 hover:to-purple-500 transition duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2 group"
               onclick="window.location.href='#contact'">
-              📞 Contact Me
+              <span class="transition-all duration-300 group-hover:rotate-12">📞</span> Contact Me
             </button>
           </div>
         </div>
 
+
         <!-- Right: Image -->
-        <div class="flex-1 flex justify-center items-center">
-          <div class="bg-gradient-to-br from-cyan-400/30 via-purple-400/20 to-pink-400/20 rounded-2xl p-4 md:p-8 shadow-lg shadow-cyan-400/20">
+        <div class="w-full lg:w-1/2 flex justify-center items-center p-10 md:p-20 pt-0">
+          <div
+            class="bg-gradient-to-br from-cyan-400/30 via-purple-400/20 to-pink-400/20 rounded-2xl p-4 md:p-8 shadow-lg shadow-cyan-400/20 w-full">
             <img
               alt="Abstract futuristic AI technology background with glowing neural network connections and digital data streams in blue and purple hues"
               class="pointer-events-none select-none transform scale-110 md:scale-125 w-full h-auto rounded-xl shadow-xl shadow-cyan-400/30 animate-slideInUp"
@@ -271,13 +312,16 @@
         </div>
       </div>
       <!-- Main Card Section End -->
-
     </div>
-
+    
     <!-- Optional: Contact section anchor -->
     <div id="contact" class="mt-20"></div>
-  </main>
 
+
+
+
+
+  </main>
   <script>
     // Navigation to project
     function gotoProject(path) {
@@ -305,6 +349,39 @@
     sidebarToggle.addEventListener("click", openSidebar);
     sidebarClose.addEventListener("click", closeSidebar);
     sidebarOverlay.addEventListener("click", closeSidebar);
+
+    // Typing animation for heading (improved, cursor separate)
+    const words = ["Intelligence", "Creativity", "Productivity", "Innovation"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let typing = true;
+    const typingWord = document.getElementById('typing-word');
+    const typingCursor = document.getElementById('typing-cursor');
+
+    function typeWord() {
+      const word = words[wordIndex];
+      if (typing) {
+        if (charIndex < word.length) {
+          typingWord.textContent = word.slice(0, charIndex + 1);
+          charIndex++;
+          setTimeout(typeWord, 90);
+        } else {
+          typing = false;
+          setTimeout(typeWord, 1200);
+        }
+      } else {
+        if (charIndex > 0) {
+          typingWord.textContent = word.slice(0, charIndex - 1);
+          charIndex--;
+          setTimeout(typeWord, 40);
+        } else {
+          typing = true;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(typeWord, 400);
+        }
+      }
+    }
+    if (typingWord && typingCursor) typeWord();
   </script>
 </body>
 

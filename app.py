@@ -49,15 +49,8 @@ def run_gesture_script():
     script_path = os.path.join(os.path.dirname(__file__), 'tools', 'tool1_gesture_launcher.py')
     print(f"Attempting to start gesture script: {script_path}", file=sys.stderr)
     try:
-        # Use Popen directly, without creationflags for GUI visibility
-        # On Windows, `DETACHED_PROCESS` can sometimes help with GUI apps launched in background
-        # but you removed it, which is good for foreground visibility.
-        # Consider a shell=True on Windows if you face issues, but be cautious with security.
+
         if sys.platform == "win32":
-            # For Windows, creating a new console can sometimes help with GUI interaction,
-            # but usually it's not needed if you want the window to appear.
-            # subprocess.CREATE_NEW_CONSOLE might be an option, but often makes things worse for visibility.
-            # Best is typically to just run it as-is without special flags beyond default.
             gesture_process = subprocess.Popen(['python', script_path])
         else:
             gesture_process = subprocess.Popen(['python', script_path])
