@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zoom In/Out Tool</title>
+    <style>
+        #preview-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #preview-img {
+            max-width: 90vw;
+            max-height: 70vh;
+            transition: transform 0.2s;
+        }
+        #zoom-controls {
+            margin-top: 10px;
+        }
+        button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Zoom In/Out Tool</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label>Select image to test:</label>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload & Show</button>
+    </form>
+    <div id="status"></div>
+    <div id="preview-container" style="display:none;">
+        <img id="preview-img" src="" alt="Preview">
+        <div id="zoom-controls">
+            <button type="button" id="zoom-in">Zoom In +</button>
+            <button type="button" id="zoom-out">Zoom Out -</button>
+            <button type="button" id="zoom-reset">Reset</button>
+            <button type="button" id="gesture-zoom">Finger Zoom</button>
+        </div>
+    </div>
+    <script>
+        let scale = 1.0;
+        const img = document.getElementById('preview-img');
+        const container = document.getElementById('preview-container');
+        let gestureZoomActive = false;
+        let gestureZoomInterval = null;
+
+        document.getElementById('uploadForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const fileInput = this.elements['image'];
+            if (fileInput.files && fileInput.files[0]) {
+                // Show preview immediately
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    img.src = ev.target.result;
+                    scale = 1.0;
+                    img.style.transform = `scale(${scale})`;
+                    container.style.display = 'block';
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+            // Optionally, upload to server (if you want to process on backend)
+            // Comment out below if you only want frontend zoom
+            const formData = new FormData(this);
+            document.getElementById('status').innerText = "Uploading...";
+            const resp = await fetch('/tool3_upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await resp.json();
+            document.getElementById('status').innerText = data.msg;
+        };
+
+        document.getElementById('zoom-in').onclick = function() {
+            scale = Math.min(scale + 0.1, 5);
+            img.style.transform = `scale(${scale})`;
+        };
+        document.getElementById('zoom-out').onclick = function() {
+            scale = Math.max(scale - 0.1, 0.2);
+            img.style.transform = `scale(${scale})`;
+        };
+        document.getElementById('zoom-reset').onclick = function() {
+            scale = 1.0;
+            img.style.transform = `scale(${scale})`;
+        };
+
+        document.getElementById('gesture-zoom').onclick = async function() {
+            if (!gestureZoomActive) {
+                // Start backend hand tracking
+                await fetch('/tool3_start_zoom', {method: 'POST'});
+                gestureZoomActive = true;
+                this.innerText = "Stop Finger Zoom";
+                gestureZoomInterval = setInterval(async () => {
+                    const resp = await fetch('/tool3_zoom_scale');
+                    const data = await resp.json();
+                    scale = data.scale;
+                    img.style.transform = `scale(${scale})`;
+                }, 100);
+            } else {
+                // Stop backend hand tracking
+                await fetch('/tool3_stop_zoom', {method: 'POST'});
+                gestureZoomActive = false;
+                this.innerText = "Finger Zoom";
+                clearInterval(gestureZoomInterval);
+            }
+        };
+    </script>
+</body>
+</html>

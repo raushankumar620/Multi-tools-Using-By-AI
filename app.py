@@ -5,6 +5,8 @@ import os
 import signal
 import sys
 import threading # Use threading for better control over the subprocess
+from werkzeug.utils import secure_filename
+import time
 
 app = Flask(__name__)
 
@@ -16,6 +18,14 @@ gesture_thread = None # To manage the lifecycle of the gesture detection in a se
 # Define a lock to prevent race conditions when modifying gesture_process
 import threading
 process_lock = threading.Lock()
+
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# For tool3 hand tracking zoom
+tool3_zoom_scale = 1.0
+tool3_zoom_thread = None
+tool3_zoom_running = False
 
 @app.route('/')
 def home():
@@ -42,6 +52,10 @@ def tool1():
 @app.route('/tool2')
 def tool2():
     return render_template('tool2.html')
+
+@app.route('/tool3')
+def tool3():
+    return render_template('tool3.html')
 
 def run_gesture_script():
     """Function to be run in a separate thread to manage the subprocess."""
@@ -118,6 +132,67 @@ def run_tool2():
     except Exception as e:
         print(f"Error running tool2: {e}", file=sys.stderr)
         return jsonify({'status': 'error', 'msg': f'Error: {str(e)}'})
+
+@app.route('/tool3_upload', methods=['POST'])
+def tool3_upload():
+    if 'image' not in request.files:
+        return jsonify({'status': 'error', 'msg': 'No file part'})
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({'status': 'error', 'msg': 'No selected file'})
+    filename = secure_filename(file.filename)
+    save_path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(save_path)
+    # No need to launch the zoom tool script anymore
+    return jsonify({'status': 'success', 'msg': '🟢 Image uploaded and previewed below. Use the zoom controls.'})
+
+def run_tool3_hand_tracking():
+    global tool3_zoom_scale, tool3_zoom_running
+    from cvzone.HandTrackingModule import HandDetector
+    import cv2
+    import numpy as np
+
+    cap = cv2.VideoCapture(0)
+    detector = HandDetector(detectionCon=0.8, maxHands=1)
+    tool3_zoom_running = True
+    while tool3_zoom_running:
+        success, img = cap.read()
+        if not success:
+            continue
+        img = cv2.flip(img, 1)
+        hands, _ = detector.findHands(img)
+        if hands:
+            hand = hands[0]
+            lmList = hand['lmList']
+            x1, y1 = lmList[4][0], lmList[4][1]
+            x2, y2 = lmList[8][0], lmList[8][1]
+            length, _, _ = detector.findDistance((x1, y1), (x2, y2), img)
+            scale = np.interp(length, [50, 300], [0.5, 3.0])
+            tool3_zoom_scale = float(scale)
+        time.sleep(0.05)
+    cap.release()
+
+@app.route('/tool3_zoom_scale')
+def tool3_zoom_scale_api():
+    return jsonify({'scale': tool3_zoom_scale})
+
+@app.route('/tool3_start_zoom', methods=['POST'])
+def tool3_start_zoom():
+    global tool3_zoom_thread, tool3_zoom_running
+    if tool3_zoom_thread is None or not tool3_zoom_thread.is_alive():
+        tool3_zoom_running = True
+        tool3_zoom_thread = threading.Thread(target=run_tool3_hand_tracking)
+        tool3_zoom_thread.daemon = True
+        tool3_zoom_thread.start()
+        return jsonify({'status': 'started'})
+    else:
+        return jsonify({'status': 'already running'})
+
+@app.route('/tool3_stop_zoom', methods=['POST'])
+def tool3_stop_zoom():
+    global tool3_zoom_running
+    tool3_zoom_running = False
+    return jsonify({'status': 'stopped'})
 
 if __name__ == '__main__':
     # Ensure all OpenCV windows are closed if the server is stopped
