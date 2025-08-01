@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Volume Control Tool</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #6e8efb, #a777e3, #f78ca0);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    /* New container to center card content */
+    .page-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      /* adjust for navbar height */
+      padding-top: 40px;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Container Card */
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn.stop {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+    }
+
+    .btn.back {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+    }
+
+    /* Status message */
+    .status {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status.loading {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .status.success {
+      background: rgba(76, 175, 80, 0.3);
+    }
+
+    .status.error {
+      background: rgba(244, 67, 54, 0.3);
+    }
+
+    /* Volume display */
+    .volume-display {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .volume-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .volume-fill {
+      height: 100%;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      width: 50%;
+    }
+
+    /* Top navigation bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-title {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="nav-title">🔊 Volume Control Tool</div>
+    <a href="/" class="btn back">🏠 Back to Home</a>
+  </div>
+
+  <div class="page-content">
+    <div class="container">
+      <h2>🔊 Volume Control</h2>
+      <p>Control your system volume using hand gestures. Simply move your thumb and index finger closer or farther apart!</p>
+
+      <div class="volume-display">
+        <h3>Current Volume</h3>
+        <div class="volume-bar">
+          <div class="volume-fill" id="volumeFill"></div>
+        </div>
+        <div id="volumePercentage">50%</div>
+      </div>
+
+      <div class="status loading" id="status">
+        🔄 Ready to start volume control...
+      </div>
+
+      <button class="btn" id="startBtn" onclick="startVolumeControl()">
+        ▶️ Start Volume Control
+      </button>
+      <button class="btn stop" id="stopBtn" onclick="stopVolumeControl()" disabled>
+        ⏹️ Stop Control
+      </button>
+
+      <div style="margin-top: 30px;">
+        <h3>✨ How to Use:</h3>
+        <p style="text-align: left; margin: 10px 0;">
+          • Show your hand to the camera<br>
+          • Pinch thumb and index finger together = Lower volume<br>
+          • Spread thumb and index finger apart = Increase volume<br>
+          • Real-time gesture recognition<br>
+          • Smooth volume transitions
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isRunning = false;
+    let volumeInterval;
+
+    function updateStatus(message, type = 'loading') {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.className = `status ${type}`;
+    }
+
+    function updateVolumeDisplay(volume) {
+      const volumeFill = document.getElementById('volumeFill');
+      const volumePercentage = document.getElementById('volumePercentage');
+      
+      volumeFill.style.width = volume + '%';
+      volumePercentage.textContent = Math.round(volume) + '%';
+    }
+
+    function startVolumeControl() {
+      if (isRunning) return;
+
+      isRunning = true;
+      document.getElementById('startBtn').disabled = true;
+      document.getElementById('stopBtn').disabled = false;
+
+      updateStatus('🚀 Starting volume control...', 'loading');
+
+      // Simulate starting volume control
+      fetch('/start_volume_control', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          updateStatus('✅ Volume control is active! Use hand gestures to control volume.', 'success');
+          // Start polling for volume updates
+          startVolumePolling();
+        } else {
+          updateStatus('⚠️ ' + data.msg, 'error');
+          resetButtons();
+        }
+      })
+      .catch(error => {
+        updateStatus('❌ Error: ' + error.message, 'error');
+        resetButtons();
+      });
+    }
+
+    function stopVolumeControl() {
+      if (!isRunning) return;
+
+      updateStatus('🛑 Stopping volume control...', 'loading');
+
+      fetch('/stop_volume_control', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        updateStatus('🔴 ' + data.msg, 'error');
+        resetButtons();
+      })
+      .catch(error => {
+        updateStatus('❌ Error: ' + error.message, 'error');
+        resetButtons();
+      });
+    }
+
+    function startVolumePolling() {
+      volumeInterval = setInterval(() => {
+        if (!isRunning) return;
+        
+        fetch('/get_volume_level')
+        .then(response => response.json())
+        .then(data => {
+          if (data.volume !== undefined) {
+            updateVolumeDisplay(data.volume);
+          }
+        })
+        .catch(error => {
+          console.log('Volume polling error:', error);
+        });
+      }, 200);
+    }
+
+    function resetButtons() {
+      isRunning = false;
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('stopBtn').disabled = true;
+      
+      if (volumeInterval) {
+        clearInterval(volumeInterval);
+        volumeInterval = null;
+      }
+    }
+  </script>
+</body>
+
+</html>

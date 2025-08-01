@@ -30,10 +30,44 @@ process_lock = threading.Lock()
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# For tool3 hand tracking zoom
-tool3_zoom_scale = 1.0
-tool3_zoom_thread = None
-tool3_zoom_running = False
+# For tool5 volume control
+tool5_volume_thread = None
+tool5_volume_running = False
+current_volume = 50.0  # Default volume percentage
+
+def run_tool5_volume_control():
+    global tool5_volume_running, current_volume
+    script_path = os.path.join(os.path.dirname(__file__), 'tools', 'tool5_volume_control.py')
+    try:
+        if sys.platform == "win32":
+            subprocess.run(['python', script_path])
+        else:
+            subprocess.run(['python', script_path])
+    except Exception as e:
+        print(f"Error running volume control script: {e}", file=sys.stderr)
+    finally:
+        tool5_volume_running = False
+
+# For tool4 face detection
+tool4_face_process = None
+tool4_face_thread = None
+
+def run_tool4_face_detection():
+    global tool4_face_process
+    script_path = os.path.join(os.path.dirname(__file__), 'tools', 'tool4_facedetection.py')
+    try:
+        if sys.platform == "win32":
+            tool4_face_process = subprocess.Popen(['python', script_path])
+        else:
+            tool4_face_process = subprocess.Popen(['python', script_path])
+        
+        print(f"Face detection process started with PID: {tool4_face_process.pid}", file=sys.stderr)
+        tool4_face_process.wait()
+        print("Face detection process finished.", file=sys.stderr)
+    except Exception as e:
+        print(f"Error running face detection script: {e}", file=sys.stderr)
+    finally:
+        tool4_face_process = None
 
 # For tool2 gun detector video stream
 tool2_video_running = False
@@ -90,15 +124,24 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html', active_page='about')
+    try:
+        return render_template('about.html', active_page='about')
+    except Exception as e:
+        return f"Template not found: {e}", 404
 
 @app.route('/features')
 def features():
-    return render_template('features.html', active_page='features')
+    try:
+        return render_template('features.html', active_page='features')
+    except Exception as e:
+        return f"Template not found: {e}", 404
 
 @app.route('/contact')
 def contact():
-    return render_template('contact.html', active_page='contact')
+    try:
+        return render_template('contact.html', active_page='contact')
+    except Exception as e:
+        return f"Template not found: {e}", 404
 
 # Pointing to the correct HTML file for the gesture launcher
 @app.route('/tool1')
@@ -112,6 +155,14 @@ def tool2():
 @app.route('/tool3')
 def tool3():
     return render_template('tool3.html')
+
+@app.route('/tool4')
+def tool4():
+    return render_template('tool4.html')
+
+@app.route('/tool5')
+def tool5():
+    return render_template('tool5.html')
 
 def run_gesture_script():
     """Function to be run in a separate thread to manage the subprocess."""
@@ -267,11 +318,75 @@ def tool3_stop_zoom():
     tool3_zoom_running = False
     return jsonify({'status': 'stopped'})
 
+# Tool4 Face Detection Routes
+@app.route('/start_face_detection', methods=['POST'])
+def start_face_detection():
+    global tool4_face_process, tool4_face_thread
+    if tool4_face_process is None or tool4_face_process.poll() is not None:
+        tool4_face_thread = threading.Thread(target=run_tool4_face_detection)
+        tool4_face_thread.daemon = True
+        tool4_face_thread.start()
+        return jsonify({'status': 'success', 'msg': '🟢 Face detection starting... (Check desktop for camera feed)'})
+    else:
+        return jsonify({'status': 'running', 'msg': '🟡 Face detection already running.'})
+
+@app.route('/stop_face_detection', methods=['POST'])
+def stop_face_detection():
+    global tool4_face_process
+    if tool4_face_process and tool4_face_process.poll() is None:
+        try:
+            if sys.platform == "win32":
+                tool4_face_process.terminate()
+            else:
+                tool4_face_process.send_signal(signal.SIGINT)
+            tool4_face_process.wait(timeout=5)
+            print("Face detection process terminated.", file=sys.stderr)
+        except subprocess.TimeoutExpired:
+            tool4_face_process.kill()
+        except Exception as e:
+            print(f"Error during face detection termination: {e}", file=sys.stderr)
+        
+        tool4_face_process = None
+        return jsonify({'status': 'success', 'msg': 'Face detection stopped.'})
+    else:
+        return jsonify({'status': 'stopped', 'msg': 'Face detection is not running.'})
+
+# Tool5 Volume Control Routes
+@app.route('/start_volume_control', methods=['POST'])
+def start_volume_control():
+    global tool5_volume_thread, tool5_volume_running
+    if not tool5_volume_running:
+        tool5_volume_running = True
+        tool5_volume_thread = threading.Thread(target=run_tool5_volume_control)
+        tool5_volume_thread.daemon = True
+        tool5_volume_thread.start()
+        return jsonify({'status': 'success', 'msg': '🟢 Volume control starting... Use hand gestures!'})
+    else:
+        return jsonify({'status': 'running', 'msg': '🟡 Volume control already running.'})
+
+@app.route('/stop_volume_control', methods=['POST'])
+def stop_volume_control():
+    global tool5_volume_running
+    tool5_volume_running = False
+    return jsonify({'status': 'stopped', 'msg': 'Volume control stopped.'})
+
+@app.route('/get_volume_level')
+def get_volume_level():
+    global current_volume
+    # In a real implementation, you would get the actual system volume
+    # For now, return a simulated value
+    return jsonify({'volume': current_volume})
+
+# Add error handler for 404
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404 if os.path.exists('templates/404.html') else ('Page not found', 404)
+
 if __name__ == '__main__':
     # Ensure all OpenCV windows are closed if the server is stopped
 
     def shutdown_server(signal, frame):
-        global gesture_process, tool2_video_running
+        global gesture_process, tool2_video_running, tool4_face_process, tool5_volume_running
         with process_lock:
             if gesture_process and gesture_process.poll() is None:
                 print("Server shutting down, attempting to terminate gesture process.", file=sys.stderr)
@@ -285,8 +400,24 @@ if __name__ == '__main__':
                     gesture_process.kill()
                 except Exception as e:
                     print(f"Error during server shutdown termination: {e}", file=sys.stderr)
-        # Also stop tool2 video stream on shutdown
+            
+            # Stop face detection process
+            if tool4_face_process and tool4_face_process.poll() is None:
+                print("Terminating face detection process.", file=sys.stderr)
+                try:
+                    if sys.platform == "win32":
+                        tool4_face_process.terminate()
+                    else:
+                        tool4_face_process.send_signal(signal.SIGINT)
+                    tool4_face_process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    tool4_face_process.kill()
+                except Exception as e:
+                    print(f"Error during face detection shutdown: {e}", file=sys.stderr)
+        
+        # Also stop tool2 video stream and tool5 volume control on shutdown
         tool2_video_running = False
+        tool5_volume_running = False
         print("Flask server shutting down.", file=sys.stderr)
         sys.exit(0)
 
