@@ -72,6 +72,108 @@ def run_tool4_face_detection():
     finally:
         tool4_face_process = None
 
+# For tool1 gesture detection with web streaming
+tool1_gesture_running = False
+tool1_gesture_lock = py_threading.Lock()
+tool1_last_action_time = 0
+tool1_action_cooldown = 3  # 3 seconds cooldown between actions
+
+def open_browser_app(url):
+    """Cross-platform browser opening function"""
+    import webbrowser
+    try:
+        webbrowser.open(url)
+        return True
+    except Exception as e:
+        print(f"Error opening browser: {e}", file=sys.stderr)
+        return False
+
+def gen_tool1_gesture_frames():
+    global tool1_gesture_running, tool1_last_action_time
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 1280)
+    cap.set(4, 720)
+    detector = HandDetector(detectionCon=0.8, maxHands=1)
+    tool1_gesture_running = True
+    
+    while tool1_gesture_running:
+        success, img = cap.read()
+        if not success:
+            continue
+            
+        img = cv2.flip(img, 1)
+        hands, img = detector.findHands(img)
+        current_time = time.time()
+        
+        if hands:
+            hand = hands[0]
+            fingers = detector.fingersUp(hand)
+            
+            # Display current finger pattern on screen
+            cv2.putText(img, f"Fingers: {fingers}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+            
+            # Check if enough time has passed since last action
+            if current_time - tool1_last_action_time > tool1_action_cooldown:
+                action_taken = False
+                action_text = ""
+                
+                # 1 Finger (Index Finger Up) - Google
+                if fingers == [0,1,0,0,0]:
+                    action_text = "Opening Google..."
+                    action_taken = open_browser_app("https://www.google.com")
+                    
+                # 2 Fingers (Index and Middle Finger Up) - YouTube
+                elif fingers == [0,1,1,0,0]:
+                    action_text = "Opening YouTube..."
+                    action_taken = open_browser_app("https://www.youtube.com")
+                    
+                # 3 Fingers (Index, Middle, Ring Finger Up) - Amazon
+                elif fingers == [0,1,1,1,0]:
+                    action_text = "Opening Amazon..."
+                    action_taken = open_browser_app("https://www.amazon.com")
+                    
+                # 5 Fingers (All Fingers Up) - WhatsApp
+                elif fingers == [1,1,1,1,1]:
+                    action_text = "Opening WhatsApp..."
+                    action_taken = open_browser_app("https://web.whatsapp.com")
+                    
+                # 4 Fingers (Thumb down) - MyGyanVihar
+                elif fingers == [0,1,1,1,1]:
+                    action_text = "Opening MyGyanVihar..."
+                    action_taken = open_browser_app("https://mygyanvihar.com")
+                
+                if action_taken:
+                    tool1_last_action_time = current_time
+                    cv2.putText(img, action_text, (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    print(f"Gesture Action: {action_text}", file=sys.stderr)
+                elif action_text:
+                    cv2.putText(img, "Action failed!", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            else:
+                remaining_time = tool1_action_cooldown - (current_time - tool1_last_action_time)
+                cv2.putText(img, f"Cooldown: {remaining_time:.1f}s", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+        
+        # Add gesture guide on the frame
+        guide_text = [
+            "Gesture Guide:",
+            "1 finger: Google",
+            "2 fingers: YouTube", 
+            "3 fingers: Amazon",
+            "4 fingers: MyGyanVihar",
+            "5 fingers: WhatsApp"
+        ]
+        
+        for i, text in enumerate(guide_text):
+            y_pos = img.shape[0] - 150 + (i * 25)
+            cv2.putText(img, text, (50, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        
+        # Encode frame as JPEG
+        ret, buffer = cv2.imencode('.jpg', img)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    
+    cap.release()
+
 # For tool2 gun detector video stream
 tool2_video_running = False
 tool2_video_lock = py_threading.Lock()
@@ -190,46 +292,29 @@ def run_gesture_script():
 
 @app.route('/start_gesture', methods=['POST'])
 def start_gesture():
-    global gesture_process, gesture_thread
-    with process_lock:
-        if gesture_process is None or gesture_process.poll() is not None:
-            # If the process is not running, or has finished
-            gesture_thread = threading.Thread(target=run_gesture_script)
-            gesture_thread.daemon = True # Allow main program to exit even if thread is running
-            gesture_thread.start()
-            return jsonify({'status': 'success', 'msg': '🟢 Gesture detection starting... (Check desktop for camera feed)'})
+    global tool1_gesture_running
+    with tool1_gesture_lock:
+        if not tool1_gesture_running:
+            tool1_gesture_running = True
+            return jsonify({'status': 'success', 'msg': '🟢 Gesture detection started! Show your hand gestures to the camera.'})
         else:
             return jsonify({'status': 'running', 'msg': '🟡 Gesture detection already running.'})
 
 @app.route('/stop_gesture', methods=['POST'])
 def stop_gesture():
-    global gesture_process, gesture_thread
-    with process_lock:
-        if gesture_process and gesture_process.poll() is None:
-            print(f"Terminating gesture process with PID: {gesture_process.pid}", file=sys.stderr)
-            try:
-                # For cross-platform termination:
-                if sys.platform == "win32":
-                    # On Windows, terminate() might not close the GUI window properly,
-                    # so taskkill is more robust for GUI applications.
-                    # However, simple terminate() usually works for Python processes.
-                    # If issues persist, consider: subprocess.call(['taskkill', '/F', '/T', '/PID', str(gesture_process.pid)])
-                    gesture_process.terminate()
-                else:
-                    gesture_process.send_signal(signal.SIGINT) # Send Ctrl+C
-                gesture_process.wait(timeout=5) # Wait for it to terminate gracefully
-                print("Gesture process terminated.", file=sys.stderr)
-            except subprocess.TimeoutExpired:
-                print("Gesture process did not terminate gracefully, killing it.", file=sys.stderr)
-                gesture_process.kill() # Force kill if terminate() fails
-            except Exception as e:
-                print(f"Error during termination: {e}", file=sys.stderr)
-            
-            gesture_process = None
-            gesture_thread = None
-            return jsonify({'status': 'success', 'msg': '🔴 Gesture detection stopped.'})
-        else:
-            return jsonify({'status': 'stopped', 'msg': '🔵 Gesture detection is not running.'})
+    global tool1_gesture_running
+    with tool1_gesture_lock:
+        tool1_gesture_running = False
+    return jsonify({'status': 'success', 'msg': '🔴 Gesture detection stopped.'})
+
+# Route to stream the video feed for tool1 gesture detection
+@app.route('/gesture_video_feed')
+def gesture_video_feed():
+    global tool1_gesture_running
+    with tool1_gesture_lock:
+        if not tool1_gesture_running:
+            tool1_gesture_running = True
+    return Response(gen_tool1_gesture_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/run_tool2', methods=['POST'])
 def run_tool2():
@@ -389,7 +474,11 @@ if __name__ == '__main__':
     # Ensure all OpenCV windows are closed if the server is stopped
 
     def shutdown_server(signal, frame):
-        global gesture_process, tool2_video_running, tool4_face_process, tool5_volume_running
+        global gesture_process, tool1_gesture_running, tool2_video_running, tool4_face_process, tool5_volume_running
+        
+        # Stop tool1 gesture detection
+        tool1_gesture_running = False
+        
         with process_lock:
             if gesture_process and gesture_process.poll() is None:
                 print("Server shutting down, attempting to terminate gesture process.", file=sys.stderr)
