@@ -6,19 +6,42 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>Contact - Smart AI Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         html {
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #000000;
             color: #fff;
             min-height: 100vh;
             position: relative;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.3);
+            border-color: #06b6d4;
         }
 
         .animate-gradientMove {
@@ -96,123 +119,241 @@
         src="https://storage.googleapis.com/a1aa/image/ae426548-2fc8-4b4c-0547-cc5c6c829a8c.jpg" width="1920" />
     
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-5 md:px-10 py-4">
-        <button onclick="window.location.href='{{ url_for('home') }}'" class="text-cyan-400 bg-gray-900 hover:bg-gray-800 rounded-md px-3 py-2 text-xl transition">
-            ← Back
-        </button>
-        
-        <ul class="hidden md:flex gap-8 text-white font-medium text-sm md:text-base select-none drop-shadow-md tracking-wide">
-            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('home') }}">Home</a></li>
-            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('about') }}">About</a></li>
-            <li><a class="px-4 py-2 rounded-lg bg-white/15 hover:bg-white/30 transition" href="{{ url_for('features') }}">Features</a></li>
-            <li><a class="px-4 py-2 rounded-lg bg-white/30 hover:bg-white/30 transition" href="{{ url_for('contact') }}">Contact</a></li>
-        </ul>
-        
-        <div></div>
+    <nav class="fixed top-0 left-0 w-full z-50 glass-effect backdrop-blur-xl border-b border-white/10 shadow-2xl">
+        <div class="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-600/20 to-cyan-400/20 animate-gradientMove"></div>
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo/Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-robot text-white text-xl font-bold"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="text-2xl font-bold text-white">Smart AI Tools</h1>
+                        <p class="text-xs text-gray-300 -mt-1">AI-Powered Solutions</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <ul class="hidden md:flex items-center space-x-4">
+                    <li>
+                        <a class="px-5 py-3 rounded-xl glass-effect hover:bg-white/20 transition-all duration-300 text-sm font-medium text-white flex items-center gap-3 group" href="{{ url_for('home') }}">
+                            <i class="fas fa-home text-cyan-400 group-hover:scale-110 transition-transform text-lg"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="px-5 py-3 rounded-xl glass-effect hover:bg-white/20 transition-all duration-300 text-sm font-medium text-white flex items-center gap-3 group" href="{{ url_for('about') }}">
+                            <i class="fas fa-info-circle text-purple-400 group-hover:scale-110 transition-transform text-lg"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="px-5 py-3 rounded-xl glass-effect hover:bg-white/20 transition-all duration-300 text-sm font-medium text-white flex items-center gap-3 group" href="{{ url_for('features') }}">
+                            <i class="fas fa-magic text-pink-400 group-hover:scale-110 transition-transform text-lg"></i>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/30 border border-cyan-400/50 transition-all duration-300 text-sm font-medium text-white flex items-center gap-3 group shadow-lg hover:shadow-cyan-500/25" href="{{ url_for('contact') }}">
+                            <i class="fas fa-envelope text-cyan-300 group-hover:scale-110 transition-transform text-lg"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden glass-effect p-4 rounded-xl text-white hover:bg-white/20 transition-all duration-300">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 glass-effect border-t border-white/10 transform -translate-y-full opacity-0 invisible transition-all duration-300 mx-6 rounded-b-2xl">
+                <div class="px-6 py-8 space-y-4">
+                    <a class="flex items-center gap-4 px-5 py-4 rounded-xl hover:bg-white/10 transition-all duration-300 text-white" href="{{ url_for('home') }}">
+                        <i class="fas fa-home text-cyan-400 w-6 text-lg"></i>
+                        <span class="font-medium">Home</span>
+                    </a>
+                    <a class="flex items-center gap-4 px-5 py-4 rounded-xl hover:bg-white/10 transition-all duration-300 text-white" href="{{ url_for('about') }}">
+                        <i class="fas fa-info-circle text-purple-400 w-6 text-lg"></i>
+                        <span class="font-medium">About</span>
+                    </a>
+                    <a class="flex items-center gap-4 px-5 py-4 rounded-xl hover:bg-white/10 transition-all duration-300 text-white" href="{{ url_for('features') }}">
+                        <i class="fas fa-magic text-pink-400 w-6 text-lg"></i>
+                        <span class="font-medium">Features</span>
+                    </a>
+                    <a class="flex items-center gap-4 px-5 py-4 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/30 text-white" href="{{ url_for('contact') }}">
+                        <i class="fas fa-envelope text-cyan-300 w-6 text-lg"></i>
+                        <span class="font-medium">Contact</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main content -->
-    <main class="pt-32 md:pt-40 px-4 max-w-6xl mx-auto min-h-screen relative z-10">
-        <div class="bg-white/10 backdrop-blur-lg border border-cyan-400/20 rounded-2xl p-8 md:p-12 animate-slideInUp">
-            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 text-center mb-12">
-                Get In Touch With Us
-            </h1>
+    <main class="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen relative z-10">
+        <div class="glass-effect rounded-3xl p-6 sm:p-8 lg:p-12 animate-slideInUp">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mb-6">
+                    <i class="fas fa-envelope text-2xl text-white"></i>
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 mb-4">
+                    Get In Touch
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Ready to transform your ideas with AI? We'd love to hear from you. Send us a message and we'll respond within 24 hours.
+                </p>
+            </div>
             
-            <div class="grid md:grid-cols-2 gap-12">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
                 <!-- Contact Form -->
-                <div>
-                    <h2 class="text-2xl font-semibold text-cyan-400 mb-6 flex items-center gap-2">
-                        <span class="text-3xl">📝</span> Send Message
-                    </h2>
-                    <form class="space-y-6" onsubmit="submitForm(event)">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-800/80 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-white backdrop-blur-sm" placeholder="Enter your full name" required>
+                <div class="order-2 lg:order-1">
+                    <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-scale">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-paper-plane text-white"></i>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-semibold text-white">Send us a Message</h2>
                         </div>
                         
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-800/80 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-white backdrop-blur-sm" placeholder="your@email.com" required>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
-                            <input type="text" id="subject" class="w-full px-4 py-3 bg-gray-800/80 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-white backdrop-blur-sm" placeholder="What's this about?" required>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                            <textarea rows="5" id="message" class="w-full px-4 py-3 bg-gray-800/80 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-white resize-none backdrop-blur-sm" placeholder="Tell us more about your inquiry..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold rounded-lg shadow-lg hover:from-cyan-500 hover:to-teal-400 transition duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                            <span>Send Message</span> <span class="text-xl">🚀</span>
-                        </button>
-                    </form>
+                        <form class="space-y-6" onsubmit="submitForm(event)">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                                        <i class="fas fa-user mr-2"></i>First Name
+                                    </label>
+                                    <input type="text" id="firstName" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white placeholder-gray-400" placeholder="John" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                                        <i class="fas fa-user mr-2"></i>Last Name
+                                    </label>
+                                    <input type="text" id="lastName" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white placeholder-gray-400" placeholder="Doe" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-envelope mr-2"></i>Email Address
+                                </label>
+                                <input type="email" id="email" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white placeholder-gray-400" placeholder="john@example.com" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-phone mr-2"></i>Phone Number (Optional)
+                                </label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white placeholder-gray-400" placeholder="+91 9876543210">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-tag mr-2"></i>Subject
+                                </label>
+                                <select id="subject" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white" required>
+                                    <option value="" class="bg-gray-800">Select a topic</option>
+                                    <option value="general" class="bg-gray-800">General Inquiry</option>
+                                    <option value="support" class="bg-gray-800">Technical Support</option>
+                                    <option value="business" class="bg-gray-800">Business Partnership</option>
+                                    <option value="feedback" class="bg-gray-800">Feedback</option>
+                                    <option value="other" class="bg-gray-800">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-comment mr-2"></i>Message
+                                </label>
+                                <textarea rows="5" id="message" class="w-full px-4 py-3 glass-effect rounded-lg input-focus text-white resize-none placeholder-gray-400" placeholder="Tell us about your project or question..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send Message</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 
                 <!-- Contact Info -->
-                <div>
-                    <h2 class="text-2xl font-semibold text-cyan-400 mb-6 flex items-center gap-2">
-                        <span class="text-3xl">📞</span> Contact Information
-                    </h2>
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl backdrop-blur-sm">
-                            <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-teal-300 rounded-full flex items-center justify-center">
-                                <span class="text-black text-xl">📧</span>
+                <div class="order-1 lg:order-2">
+                    <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-scale">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-address-book text-white"></i>
                             </div>
-                            <div>
-                                <h3 class="font-semibold text-white">Email</h3>
-                                <p class="text-gray-300">info@smartaitools.com</p>
+                            <h2 class="text-xl sm:text-2xl font-semibold text-white">Contact Information</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 glass-effect rounded-xl hover-scale">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white">Email</h3>
+                                    <p class="text-gray-300 text-sm">contact@smartaitools.com</p>
+                                    <p class="text-gray-400 text-xs">We reply within 24 hours</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 glass-effect rounded-xl hover-scale">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white">Phone</h3>
+                                    <p class="text-gray-300 text-sm">+91 9876 543 210</p>
+                                    <p class="text-gray-400 text-xs">Mon-Fri, 9AM-6PM IST</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 glass-effect rounded-xl hover-scale">
+                                <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white">Office</h3>
+                                    <p class="text-gray-300 text-sm">Mumbai, Maharashtra</p>
+                                    <p class="text-gray-400 text-xs">India</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 glass-effect rounded-xl hover-scale">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-400 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clock text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-white">Business Hours</h3>
+                                    <p class="text-gray-300 text-sm">Monday - Friday</p>
+                                    <p class="text-gray-400 text-xs">9:00 AM - 6:00 PM IST</p>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl backdrop-blur-sm">
-                            <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center">
-                                <span class="text-black text-xl">📱</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white">Phone</h3>
-                                <p class="text-gray-300">+91 9876543210</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl backdrop-blur-sm">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-                                <span class="text-black text-xl">🌐</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white">Website</h3>
-                                <p class="text-gray-300">www.smartaitools.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-xl backdrop-blur-sm">
-                            <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-400 rounded-full flex items-center justify-center">
-                                <span class="text-black text-xl">📍</span>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white">Location</h3>
-                                <p class="text-gray-300">Mumbai, India</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 p-4 bg-gray-800/50 rounded-xl backdrop-blur-sm">
+                        <!-- Social Media -->
+                        <div class="mt-8 pt-6 border-t border-white/10">
                             <h3 class="font-semibold text-white mb-4 flex items-center gap-2">
-                                <span class="text-xl">🌟</span> Follow Us
+                                <i class="fas fa-share-alt text-cyan-400"></i>
+                                Follow Us
                             </h3>
-                            <div class="flex gap-4">
-                                <a href="#" class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition text-white text-xl">
-                                    📘
+                            <div class="flex gap-3">
+                                <a href="#" class="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                    <i class="fab fa-facebook-f text-white"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center hover:scale-110 transition text-white text-xl">
-                                    🐦
+                                <a href="#" class="w-12 h-12 bg-sky-500 hover:bg-sky-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                    <i class="fab fa-twitter text-white"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center hover:scale-110 transition text-white text-xl">
-                                    📸
+                                <a href="#" class="w-12 h-12 bg-pink-600 hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                    <i class="fab fa-instagram text-white"></i>
                                 </a>
-                                <a href="#" class="w-12 h-12 bg-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition text-white text-xl">
-                                    💼
+                                <a href="#" class="w-12 h-12 bg-blue-800 hover:bg-blue-900 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                    <i class="fab fa-linkedin-in text-white"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-800 hover:bg-gray-900 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                                    <i class="fab fa-github text-white"></i>
                                 </a>
                             </div>
                         </div>
@@ -220,21 +361,7 @@
                 </div>
             </div>
             
-            <!-- Additional Info Section -->
-            <div class="mt-12 text-center">
-                <div class="bg-gradient-to-r from-cyan-900/60 via-purple-900/40 to-pink-900/30 rounded-2xl p-8 backdrop-blur-md border border-cyan-400/30">
-                    <h3 class="text-2xl font-bold text-cyan-300 mb-4">💬 We're Here to Help!</h3>
-                    <p class="text-lg text-gray-300 mb-6">
-                        Have questions about our AI tools? Need technical support? Want to collaborate? 
-                        We'd love to hear from you! Our team typically responds within 24 hours.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <span class="px-4 py-2 bg-cyan-400/20 rounded-full text-cyan-300 text-sm">⚡ Quick Response</span>
-                        <span class="px-4 py-2 bg-purple-400/20 rounded-full text-purple-300 text-sm">🤝 Friendly Support</span>
-                        <span class="px-4 py-2 bg-pink-400/20 rounded-full text-pink-300 text-sm">🎯 Expert Help</span>
-                    </div>
-                </div>
-            </div>
+        
         </div>
     </main>
 
@@ -243,26 +370,132 @@
             event.preventDefault();
             
             // Get form data
-            const name = document.getElementById('name').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
             const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
             // Simple validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields!');
+            if (!firstName || !lastName || !email || !subject || !message) {
+                // Show error notification
+                showNotification('Please fill in all required fields!', 'error');
                 return;
             }
             
-            // Show success message
-            alert('Thank you for your message! We will get back to you soon. 🚀');
+            // Show loading state
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            submitBtn.disabled = true;
             
-            // Clear form
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('subject').value = '';
-            document.getElementById('message').value = '';
+            // Simulate form submission
+            setTimeout(() => {
+                // Show success message
+                showNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+                
+                // Clear form
+                document.getElementById('firstName').value = '';
+                document.getElementById('lastName').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('subject').value = '';
+                document.getElementById('message').value = '';
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
         }
+        
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full ${
+                type === 'success' 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-red-600 text-white'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-auto">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Add smooth scrolling for mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isMenuOpen = false;
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    isMenuOpen = !isMenuOpen;
+                    
+                    if (isMenuOpen) {
+                        // Open menu
+                        mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+                        mobileMenu.classList.add('translate-y-0', 'opacity-100', 'visible');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-bars');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-times');
+                    } else {
+                        // Close menu
+                        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+                        mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    }
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target) && isMenuOpen) {
+                        isMenuOpen = false;
+                        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+                        mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    }
+                });
+
+                // Close mobile menu when clicking on menu items
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        isMenuOpen = false;
+                        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+                        mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    });
+                });
+            }
+        });
     </script>
 </body>
 

@@ -18,8 +18,6 @@ from playsound import playsound
 
 app = Flask(__name__)
 
-# Use a dictionary to store process objects, if you plan for multiple tools to run concurrently
-# For now, let's stick to one gesture_process for simplicity.
 gesture_process = None
 gesture_thread = None # To manage the lifecycle of the gesture detection in a separate thread
 
@@ -34,6 +32,11 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 tool5_volume_thread = None
 tool5_volume_running = False
 current_volume = 50.0  # Default volume percentage
+
+# For tool3 zoom control
+tool3_zoom_scale = 1.0  # Default zoom scale
+tool3_zoom_thread = None
+tool3_zoom_running = False
 
 def run_tool5_volume_control():
     global tool5_volume_running, current_volume
