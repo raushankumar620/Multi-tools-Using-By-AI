@@ -83,7 +83,7 @@ Multi-tools-Using-By-AI/
 - **Webcam/Camera** for gesture recognition
 - **pip** (Python package manager)
 
-### Installation & Setup
+### Installation & Setups
 
 1. **Clone the repository:**
 ```bash
