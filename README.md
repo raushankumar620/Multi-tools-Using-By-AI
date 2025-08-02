@@ -195,3 +195,198 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Made with ❤️ by [Raushan Kumar](https://github.com/raushankumar620)**
 
 *If you found this project helpful, please give it a ⭐!*
+
+# 🎤 AI Voice Assistant - Tool 6
+
+A comprehensive voice assistant that works completely offline without any external APIs!
+
+## ✨ Features
+
+### 🎯 Core Capabilities
+- **Speech Recognition** - Understands your voice commands
+- **Text-to-Speech** - Responds with natural voice
+- **Offline Operation** - No internet required
+- **Multi-language Support** - English voice commands
+
+### 📱 Available Commands
+
+#### 🕐 Time & Date
+- "What time is it?"
+- "What's the date today?"
+- "Current time"
+
+#### 🌐 Web Browsing
+- "Open Google"
+- "Open YouTube" 
+- "Open browser"
+
+#### 📱 Application Control
+- "Open calculator"
+- "Open notepad"
+- "Calculator"
+
+#### 🔊 Volume Control
+- "Volume up"
+- "Volume down"
+- "Mute"
+
+#### 📷 Camera
+- "Take photo"
+- "Camera"
+- "Take picture"
+
+#### 🧮 Math Calculations
+- "Calculate 15 plus 25"
+- "What is 100 divided by 5?"
+- "Math: 5 times 7"
+
+#### 🔍 Web Search
+- "Search for Python tutorials"
+- "Find information about AI"
+
+#### 😂 Entertainment
+- "Tell me a joke"
+- "Make me laugh"
+
+#### ❓ Help & Control
+- "Help" - Get list of commands
+- "What can you do?"
+- "Stop" - Exit assistant
+
+## 🚀 Setup Instructions
+
+### 1. Install Dependencies
+
+Run the setup script:
+```bash
+python setup_voice_assistant.py
+```
+
+Or install manually:
+```bash
+pip install speechrecognition pyttsx3 pyaudio opencv-python
+```
+
+### 2. Run the Application
+
+Start the Flask server:
+```bash
+python app.py
+```
+
+### 3. Access Voice Assistant
+
+Open your browser and go to:
+```
+http://localhost:5000/tool6
+```
+
+## 🎮 How to Use
+
+1. **Start the Assistant**: Click "Start Assistant" button
+2. **Speak Commands**: Wait for the listening indicator and speak clearly
+3. **Listen to Response**: The assistant will respond with voice and text
+4. **Stop when Done**: Say "stop" or click "Stop Assistant"
+
+## 🔧 Technical Details
+
+### Dependencies
+- **speechrecognition** - Voice input processing
+- **pyttsx3** - Text-to-speech conversion
+- **opencv-python** - Camera functionality
+- **pyaudio** - Microphone access (optional but recommended)
+
+### Architecture
+- **Frontend**: HTML/CSS/JavaScript with Bootstrap
+- **Backend**: Flask web server
+- **Voice Processing**: Local speech recognition
+- **TTS Engine**: System text-to-speech
+
+### Offline Capabilities
+- Works without internet connection
+- No external API calls
+- Local speech processing
+- System-level integrations
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+**Microphone not working:**
+- Check microphone permissions
+- Install pyaudio: `pip install pyaudio`
+- Test microphone in other applications
+
+**TTS not working:**
+- Check system audio settings
+- Install TTS voices (Windows/macOS)
+- Verify speaker/headphone connection
+
+**Import errors:**
+- Run: `pip install -r requirements.txt`
+- Check Python version (3.7+ required)
+
+### Performance Tips
+
+1. **Clear Environment**: Minimize background noise
+2. **Speak Clearly**: Use normal speaking pace
+3. **Wait for Indicator**: Wait for listening animation
+4. **Close Other Audio Apps**: Reduce microphone conflicts
+
+## 🎯 Advanced Features
+
+### Custom Commands
+You can extend the voice assistant by adding new commands in `tool6_voice_assistance.py`:
+
+```python
+# Add to commands dictionary
+'your_command': ['keyword1', 'keyword2'],
+
+# Add processing logic
+elif any(word in command for word in self.commands['your_command']):
+    return self.your_custom_function()
+```
+
+### Integration
+The voice assistant integrates seamlessly with other tools in the Multi-Tools project.
+
+## 📝 Development
+
+### File Structure
+```
+tools/tool6_voice_assistance.py    # Main voice assistant code
+templates/tool6.html               # Web interface
+setup_voice_assistant.py           # Setup script
+test_voice_assistant.py           # Test script
+```
+
+### Adding New Features
+1. Add command keywords to `self.commands`
+2. Implement processing function
+3. Add to `process_command()` method
+4. Update HTML interface if needed
+
+## 🎉 Demo Commands
+
+Try these commands to test the assistant:
+
+```
+"Hello, how are you?"
+"What time is it?"
+"Open Google"
+"Tell me a joke"
+"Calculate 25 plus 75"
+"Take a photo"
+"Volume up"
+"Search for artificial intelligence"
+"Help"
+"Stop"
+```
+
+## 📞 Support
+
+For issues or feature requests, check the main project documentation or create an issue in the repository.
+
+---
+
+**Enjoy your offline AI voice assistant! 🎤🤖**

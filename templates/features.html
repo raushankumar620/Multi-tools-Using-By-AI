@@ -86,6 +86,7 @@
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -96,25 +97,25 @@
             .animate-slideInUp {
                 animation-duration: 0.8s;
             }
-            
+
             .features-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .feature-card {
                 min-width: 280px;
                 width: 100%;
             }
-            
+
             .emoji-size {
                 font-size: 3rem;
             }
-            
+
             .title-mobile {
                 font-size: 2rem;
                 line-height: 1.2;
             }
-            
+
             .card-title-mobile {
                 font-size: 1.25rem;
             }
@@ -124,15 +125,15 @@
             .emoji-size {
                 font-size: 2.5rem;
             }
-            
+
             .title-mobile {
                 font-size: 1.75rem;
             }
-            
+
             .card-title-mobile {
                 font-size: 1.125rem;
             }
-            
+
             .feature-card {
                 min-width: 260px;
                 padding: 1rem;
@@ -143,11 +144,11 @@
 
 <body class="relative bg-black">
     <!-- Animated gradient overlay -->
-         <!--================== Include the navbar===================== -->
+    <!--================== Include the navbar===================== -->
 
-      {% include 'layout/navbar.html' %}
+    {% include 'layout/navbar.html' %}
 
-<!--================== End of navbar ===================== -->
+    <!--================== End of navbar ===================== -->
 
     <div class="fixed inset-0 pointer-events-none z-0">
         <div class="w-full h-full animate-bgGradient opacity-40"></div>
@@ -158,248 +159,180 @@
         src="https://storage.googleapis.com/a1aa/image/ae426548-2fc8-4b4c-0547-cc5c6c829a8c.jpg" width="1920" />
 
     <main class="pt-16 sm:pt-20 md:pt-24 px-2 sm:px-4 lg:px-6 max-w-7xl mx-auto min-h-screen relative z-10">
-        <div class="bg-white/10 backdrop-blur-lg border border-cyan-400/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 animate-slideInUp mt-8 sm:mt-12 md:mt-16">
-            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 text-center mb-8 sm:mb-10 md:mb-12 title-mobile">
+        <div
+            class="bg-white/10 backdrop-blur-lg border border-cyan-400/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 animate-slideInUp mt-8 sm:mt-12 md:mt-16">
+            <h1
+                class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300 text-center mb-8 sm:mb-10 md:mb-12 title-mobile">
                 Powerful AI Features
             </h1>
 
-            <!-- Desktop and Tablet: Horizontal Scroll, Mobile: Grid Layout -->
-            <div class="hidden sm:block">
-                <div class="overflow-x-auto whitespace-nowrap flex gap-4 md:gap-6 lg:gap-8 pb-4 scroll-smooth no-scrollbar">
-                    <!-- Gesture Launcher -->
-                    <div class="bg-gray-800/60 min-w-[280px] sm:min-w-[300px] max-w-sm flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-cyan-400/30 hover:border-cyan-400 transition-all hover:scale-105 feature-card">
-                        <div class="text-4xl md:text-5xl mb-3 md:mb-4 text-center animate-bounce emoji-size">🖐️</div>
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-cyan-400 mb-3 md:mb-4 text-center card-title-mobile">Gesture Launcher</h3>
-                        <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture recognition
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> App launching control
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Customizable gestures
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool1'" class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold rounded-lg hover:from-cyan-500 hover:to-teal-400 transition transform hover:scale-105 text-sm md:text-base">
-                            Try Now 🚀
-                        </button>
-                    </div>
-
-                    <!-- Gun Detector -->
-                    <div class="bg-gray-800/60 min-w-[280px] sm:min-w-[300px] max-w-sm flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-pink-400/30 hover:border-pink-400 transition-all hover:scale-105 feature-card">
-                        <div class="text-4xl md:text-5xl mb-3 md:mb-4 text-center animate-bounce emoji-size">🔫</div>
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-pink-400 mb-3 md:mb-4 text-center card-title-mobile">Gun Detector</h3>
-                        <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time gun detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Computer vision AI
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Security applications
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Alert system
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool2'" class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold rounded-lg hover:from-pink-500 hover:to-purple-500 transition transform hover:scale-105 text-sm md:text-base">
-                            Try Now 🎯
-                        </button>
-                    </div>
-
-                    <!-- Zoom Tool -->
-                    <div class="bg-gray-800/60 min-w-[280px] sm:min-w-[300px] max-w-sm flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-purple-400/30 hover:border-purple-400 transition-all hover:scale-105 feature-card">
-                        <div class="text-4xl md:text-5xl mb-3 md:mb-4 text-center animate-bounce emoji-size">🔍</div>
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-purple-400 mb-3 md:mb-4 text-center card-title-mobile">AI Zoom Tool</h3>
-                        <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture zoom
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Image enhancement
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Smooth scaling
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Interactive controls
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool3'" class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-purple-400 to-pink-400 text-black font-semibold rounded-lg hover:from-purple-500 hover:to-pink-500 transition transform hover:scale-105 text-sm md:text-base">
-                            Try Now 🔎
-                        </button>
-                    </div>
-
-                    <!-- Face Detection -->
-                    <div class="bg-gray-800/60 min-w-[280px] sm:min-w-[300px] max-w-sm flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-yellow-400/30 hover:border-yellow-400 transition-all hover:scale-105 feature-card">
-                        <div class="text-4xl md:text-5xl mb-3 md:mb-4 text-center animate-bounce emoji-size">👤</div>
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-400 mb-3 md:mb-4 text-center card-title-mobile">Face Detection</h3>
-                        <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time face detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Multiple face recognition
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Age & emotion detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Face landmark tracking
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool4'" class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-semibold rounded-lg hover:from-yellow-500 hover:to-orange-500 transition transform hover:scale-105 text-sm md:text-base">
-                            Try Now 👁️
-                        </button>
-                    </div>
-
-                    <!-- Volume Control -->
-                    <div class="bg-gray-800/60 min-w-[280px] sm:min-w-[300px] max-w-sm flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-green-400/30 hover:border-green-400 transition-all hover:scale-105 feature-card">
-                        <div class="text-4xl md:text-5xl mb-3 md:mb-4 text-center animate-bounce emoji-size">🔊</div>
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-green-400 mb-3 md:mb-4 text-center card-title-mobile">Volume Control</h3>
-                        <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture control
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time volume adjust
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Smooth transitions
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Contactless control
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool5'" class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-green-400 to-teal-400 text-black font-semibold rounded-lg hover:from-green-500 hover:to-teal-500 transition transform hover:scale-105 text-sm md:text-base">
-                            Try Now 🎵
-                        </button>
-                    </div>
+            <!-- Unified Responsive Layout -->
+            <div
+                class="sm:overflow-x-auto sm:whitespace-nowrap sm:flex sm:gap-4 md:gap-6 lg:gap-8 sm:pb-4 sm:scroll-smooth no-scrollbar grid grid-cols-1 gap-4 sm:grid-cols-none">
+                <!-- Gesture Launcher -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-cyan-400/30 hover:border-cyan-400 transition-all hover:scale-105 feature-card">
+                    <div class="text-3xl sm:text-4xl md:text-5xl mb-3 md:mb-4 text-center emoji-size">🖐️</div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-cyan-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        Gesture Launcher</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Hand gesture recognition
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> App launching control
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Real-time detection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Customizable gestures
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool1'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold rounded-lg hover:from-cyan-500 hover:to-teal-400 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 🚀
+                    </button>
                 </div>
-            </div>
 
-            <!-- Mobile: Grid Layout -->
-            <div class="block sm:hidden">
-                <div class="grid grid-cols-1 gap-4 features-grid">
-                    <!-- Gesture Launcher -->
-                    <div class="bg-gray-800/60 rounded-xl p-4 backdrop-blur-sm border border-cyan-400/30 hover:border-cyan-400 transition-all feature-card">
-                        <div class="text-3xl mb-3 text-center animate-bounce emoji-size">🖐️</div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-3 text-center card-title-mobile">Gesture Launcher</h3>
-                        <ul class="space-y-1.5 text-gray-300 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture recognition
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> App launching control
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Customizable gestures
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool1'" class="w-full mt-4 px-3 py-2 bg-gradient-to-r from-cyan-400 to-teal-300 text-black font-semibold rounded-lg hover:from-cyan-500 hover:to-teal-400 transition text-sm">
-                            Try Now 🚀
-                        </button>
-                    </div>
+                <!-- Gun Detector -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-pink-400/30 hover:border-pink-400 transition-all hover:scale-105 feature-card">
+                    <div class="text-3xl sm:text-4xl md:text-5xl mb-3 md:mb-4 text-center emoji-size">🔫</div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-pink-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        Gun Detector</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Real-time gun detection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Computer vision AI
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Security applications
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Alert system
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool2'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold rounded-lg hover:from-pink-500 hover:to-purple-500 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 🎯
+                    </button>
+                </div>
 
-                    <!-- Gun Detector -->
-                    <div class="bg-gray-800/60 rounded-xl p-4 backdrop-blur-sm border border-pink-400/30 hover:border-pink-400 transition-all feature-card">
-                        <div class="text-3xl mb-3 text-center animate-bounce emoji-size">🔫</div>
-                        <h3 class="text-lg font-bold text-pink-400 mb-3 text-center card-title-mobile">Gun Detector</h3>
-                        <ul class="space-y-1.5 text-gray-300 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time gun detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Computer vision AI
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Security applications
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Alert system
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool2'" class="w-full mt-4 px-3 py-2 bg-gradient-to-r from-pink-400 to-purple-400 text-black font-semibold rounded-lg hover:from-pink-500 hover:to-purple-500 transition text-sm">
-                            Try Now 🎯
-                        </button>
-                    </div>
+                <!-- Zoom Tool -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-purple-400/30 hover:border-purple-400 transition-all hover:scale-105 feature-card">
+                    <div class="text-3xl sm:text-4xl md:text-5xl mb-3 md:mb-4 text-center emoji-size">🔍</div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-purple-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        AI Zoom Tool</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Hand gesture zoom
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Image enhancement
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Smooth scaling
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Interactive controls
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool3'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-purple-400 to-pink-400 text-black font-semibold rounded-lg hover:from-purple-500 hover:to-pink-500 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 🔎
+                    </button>
+                </div>
 
-                    <!-- Zoom Tool -->
-                    <div class="bg-gray-800/60 rounded-xl p-4 backdrop-blur-sm border border-purple-400/30 hover:border-purple-400 transition-all feature-card">
-                        <div class="text-3xl mb-3 text-center animate-bounce emoji-size">🔍</div>
-                        <h3 class="text-lg font-bold text-purple-400 mb-3 text-center card-title-mobile">AI Zoom Tool</h3>
-                        <ul class="space-y-1.5 text-gray-300 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture zoom
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Image enhancement
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Smooth scaling
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Interactive controls
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool3'" class="w-full mt-4 px-3 py-2 bg-gradient-to-r from-purple-400 to-pink-400 text-black font-semibold rounded-lg hover:from-purple-500 hover:to-pink-500 transition text-sm">
-                            Try Now 🔎
-                        </button>
-                    </div>
+                <!-- Face Detection -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-yellow-400/30 hover:border-yellow-400 transition-all hover:scale-105 feature-card">
+                    <div class="text-3xl sm:text-4xl md:text-5xl mb-3 md:mb-4 text-center emoji-size">👤</div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        Face Detection</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Real-time face detection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Multiple face recognition
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Age & emotion detection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Face landmark tracking
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool4'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-semibold rounded-lg hover:from-yellow-500 hover:to-orange-500 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 👁️
+                    </button>
+                </div>
 
-                    <!-- Face Detection -->
-                    <div class="bg-gray-800/60 rounded-xl p-4 backdrop-blur-sm border border-yellow-400/30 hover:border-yellow-400 transition-all feature-card">
-                        <div class="text-3xl mb-3 text-center animate-bounce emoji-size">👤</div>
-                        <h3 class="text-lg font-bold text-yellow-400 mb-3 text-center card-title-mobile">Face Detection</h3>
-                        <ul class="space-y-1.5 text-gray-300 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time face detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Multiple face recognition
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Age & emotion detection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Face landmark tracking
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool4'" class="w-full mt-4 px-3 py-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-semibold rounded-lg hover:from-yellow-500 hover:to-orange-500 transition text-sm">
-                            Try Now 👁️
-                        </button>
-                    </div>
+                <!-- Volume Control -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-green-400/30 hover:border-green-400 transition-all hover:scale-105 feature-card">
+                    <div class="text-3xl sm:text-4xl md:text-5xl mb-3 md:mb-4 text-center emoji-size">🔊</div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-green-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        Volume Control</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Hand gesture control
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Real-time volume adjust
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Smooth transitions
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Contactless control
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool5'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-green-400 to-teal-400 text-black font-semibold rounded-lg hover:from-green-500 hover:to-teal-500 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 🎵
+                    </button>
+                </div>
 
-                    <!-- Volume Control -->
-                    <div class="bg-gray-800/60 rounded-xl p-4 backdrop-blur-sm border border-green-400/30 hover:border-green-400 transition-all feature-card">
-                        <div class="text-3xl mb-3 text-center animate-bounce emoji-size">🔊</div>
-                        <h3 class="text-lg font-bold text-green-400 mb-3 text-center card-title-mobile">Volume Control</h3>
-                        <ul class="space-y-1.5 text-gray-300 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Hand gesture control
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Real-time volume adjust
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Smooth transitions
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-green-400">✓</span> Contactless control
-                            </li>
-                        </ul>
-                        <button onclick="window.location.href='/tool5'" class="w-full mt-4 px-3 py-2 bg-gradient-to-r from-green-400 to-teal-400 text-black font-semibold rounded-lg hover:from-green-500 hover:to-teal-500 transition text-sm">
-                            Try Now 🎵
-                        </button>
+                <!-- Voice Assistant -->
+                <div
+                    class="bg-gray-800/60 w-full sm:min-w-[240px] md:min-w-[260px] sm:max-w-xs sm:flex-shrink-0 rounded-xl md:rounded-2xl p-4 md:p-6 backdrop-blur-sm border border-blue-400/30 hover:border-blue-400 transition-all hover:scale-105 feature-card">
+                    <div class="mb-3 md:mb-4 text-center">
+                        <div class="text-3xl sm:text-4xl md:text-5xl sm:hidden emoji-size">🎤</div>
+                        <img src="/static/siri.gif" alt="Voice Assistant GIF"
+                            class="mx-auto w-12 h-12 sm:w-16 sm:h-16 rounded-full hidden sm:block" />
                     </div>
+                    <h3
+                        class="text-lg sm:text-xl md:text-2xl font-bold text-blue-400 mb-3 md:mb-4 text-center card-title-mobile">
+                        Voice Assistant</h3>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-300 text-sm md:text-base">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Voice command recognition
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> AI-powered responses
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Smart automation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">✓</span> Natural language processing
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='/tool6'"
+                        class="w-full mt-4 md:mt-6 px-3 md:px-4 py-2 bg-gradient-to-r from-blue-400 to-indigo-400 text-black font-semibold rounded-lg hover:from-blue-500 hover:to-indigo-500 transition transform hover:scale-105 text-sm md:text-base">
+                        Try Now 🎙️
+                    </button>
                 </div>
             </div>
 
@@ -407,20 +340,23 @@
             <div class="mt-12 sm:mt-16">
                 <h2 class="text-2xl sm:text-3xl font-bold text-center text-yellow-400 mb-6 sm:mb-8">🚀 Coming Soon</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    <div class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70">
-                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3 animate-bounce">🎤</div>
-                        <h4 class="text-base sm:text-lg font-semibold text-yellow-400">Voice Assistant</h4>
-                        <p class="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2">AI-powered voice commands</p>
+                    <div
+                        class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70">
+                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🤖</div>
+                        <h4 class="text-base sm:text-lg font-semibold text-yellow-400">AI Chatbot</h4>
+                        <p class="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2">Smart conversational AI</p>
                     </div>
-                    
-                    <div class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70">
-                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3 animate-bounce">👁️</div>
+
+                    <div
+                        class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70">
+                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">👁️</div>
                         <h4 class="text-base sm:text-lg font-semibold text-yellow-400">Eye Tracking</h4>
                         <p class="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2">Control with eye movements</p>
                     </div>
-                    
-                    <div class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70 sm:col-span-2 lg:col-span-1">
-                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3 animate-bounce">🧠</div>
+
+                    <div
+                        class="bg-gray-700/50 rounded-xl p-4 sm:p-6 text-center border-2 border-dashed border-yellow-400/50 opacity-70 sm:col-span-2 lg:col-span-1">
+                        <div class="text-3xl sm:text-4xl mb-2 sm:mb-3">🧠</div>
                         <h4 class="text-base sm:text-lg font-semibold text-yellow-400">Smart Analytics</h4>
                         <p class="text-gray-400 text-xs sm:text-sm mt-1 sm:mt-2">AI data analysis tools</p>
                     </div>
@@ -430,42 +366,47 @@
     </main>
 
     <script>
-        // Auto-scroll functionality only for desktop/tablet
-        if (window.innerWidth >= 640) {
-            const scrollContainer = document.querySelector('.overflow-x-auto');
-            let scrollSpeed = 1;
-            let isScrolling = true;
-            
-            function autoScroll() {
-                if (isScrolling && scrollContainer) {
-                    scrollContainer.scrollLeft += scrollSpeed;
-                    if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
-                        scrollContainer.scrollLeft = 0; // loop back
-                    }
-                }
-                requestAnimationFrame(autoScroll);
-            }
+        // Auto-scroll functionality only for desktop/tablet (sm and above)
+        function initializeAutoScroll() {
+            if (window.innerWidth >= 640) {
+                const scrollContainer = document.querySelector('.sm\\:overflow-x-auto');
+                let scrollSpeed = 1;
+                let isScrolling = true;
 
-            // Pause scrolling on hover
-            if (scrollContainer) {
-                scrollContainer.addEventListener('mouseenter', () => {
-                    isScrolling = false;
-                });
-                
-                scrollContainer.addEventListener('mouseleave', () => {
-                    isScrolling = true;
-                });
-                
-                // Start auto-scrolling after a short delay
-                setTimeout(() => {
-                    autoScroll();
-                }, 2000);
+                function autoScroll() {
+                    if (isScrolling && scrollContainer) {
+                        scrollContainer.scrollLeft += scrollSpeed;
+                        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+                            scrollContainer.scrollLeft = 0; // loop back
+                        }
+                    }
+                    requestAnimationFrame(autoScroll);
+                }
+
+                // Pause scrolling on hover
+                if (scrollContainer) {
+                    scrollContainer.addEventListener('mouseenter', () => {
+                        isScrolling = false;
+                    });
+
+                    scrollContainer.addEventListener('mouseleave', () => {
+                        isScrolling = true;
+                    });
+
+                    // Start auto-scrolling after a short delay
+                    setTimeout(() => {
+                        autoScroll();
+                    }, 2000);
+                }
             }
         }
 
+        // Initialize on load
+        initializeAutoScroll();
+
         // Handle responsive behavior on window resize
         window.addEventListener('resize', () => {
-            location.reload(); // Simple approach to handle layout changes
+            initializeAutoScroll();
         });
     </script>
 </body>

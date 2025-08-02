@@ -269,6 +269,10 @@ def tool4():
 def tool5():
     return render_template('tool5.html')
 
+@app.route('/tool6')
+def tool6():
+    return render_template('tool6.html')
+
 def run_gesture_script():
     """Function to be run in a separate thread to manage the subprocess."""
     global gesture_process
@@ -464,6 +468,54 @@ def get_volume_level():
     # In a real implementation, you would get the actual system volume
     # For now, return a simulated value
     return jsonify({'volume': current_volume})
+
+# Tool6 Voice Assistant Routes
+try:
+    from tools.tool6_voice_assistance import start_voice_assistant, stop_voice_assistant, is_assistant_running
+    
+    @app.route('/start_voice_assistant', methods=['POST'])
+    def start_voice_assistant_route():
+        try:
+            if start_voice_assistant():
+                return jsonify({'status': 'success', 'msg': '🟢 Voice assistant started! You can now speak commands.'})
+            else:
+                return jsonify({'status': 'running', 'msg': '🟡 Voice assistant is already running.'})
+        except Exception as e:
+            return jsonify({'status': 'error', 'msg': f'Error starting voice assistant: {str(e)}'})
+    
+    @app.route('/stop_voice_assistant', methods=['POST'])
+    def stop_voice_assistant_route():
+        try:
+            if stop_voice_assistant():
+                return jsonify({'status': 'success', 'msg': '🔴 Voice assistant stopped.'})
+            else:
+                return jsonify({'status': 'stopped', 'msg': 'Voice assistant was not running.'})
+        except Exception as e:
+            return jsonify({'status': 'error', 'msg': f'Error stopping voice assistant: {str(e)}'})
+    
+    @app.route('/voice_assistant_status')
+    def voice_assistant_status():
+        try:
+            running = is_assistant_running()
+            status_msg = "Listening for voice commands..." if running else "Voice assistant is stopped"
+            return jsonify({'running': running, 'status': status_msg})
+        except Exception as e:
+            return jsonify({'running': False, 'status': f'Error: {str(e)}'})
+
+except ImportError as e:
+    print(f"Voice assistant import error: {e}")
+    
+    @app.route('/start_voice_assistant', methods=['POST'])
+    def start_voice_assistant_route():
+        return jsonify({'status': 'error', 'msg': 'Voice assistant dependencies not installed. Please install: pip install speechrecognition pyttsx3 pyaudio'})
+    
+    @app.route('/stop_voice_assistant', methods=['POST'])
+    def stop_voice_assistant_route():
+        return jsonify({'status': 'error', 'msg': 'Voice assistant not available'})
+    
+    @app.route('/voice_assistant_status')
+    def voice_assistant_status():
+        return jsonify({'running': False, 'status': 'Voice assistant dependencies not installed'})
 
 # Add error handler for 404
 @app.errorhandler(404)

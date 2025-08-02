@@ -19,14 +19,18 @@
 </head>
 
 <body>
-  <nav
-    class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-6 md:px-12 py-4">
-    <button aria-label="Open AI Tools Sidebar"
-      class="text-cyan-400 bg-gray-900 hover:bg-gray-800 rounded-md px-4 py-2 text-2xl md:text-3xl transition focus:outline-none focus:ring-2 focus:ring-cyan-400"
-      id="sidebarToggle">
-      <i class="fas fa-bars"></i>
-    </button>
+<nav
+  class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove shadow-lg flex items-center justify-between px-6 md:px-12 py-4">
 
+  <button aria-label="Open AI Tools Sidebar" id="sidebarToggle"
+    class="rounded-md p-[3px] bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 bg-[length:300%_300%] animate-gradientMove focus:outline-none focus:ring-2 focus:ring-cyan-400">
+    
+    <!-- Inner white background to make logo cleanly visible -->
+    <div class="bg-white rounded-md p-1">
+      <img src="/static/logo.png" alt="Menu Icon"
+        class="w-10 h-10 md:w-8 md:h-8 object-contain transition-transform duration-200 hover:scale-110" />
+    </div>
+  </button>
     <ul
       class="hidden md:flex gap-10 text-white font-semibold text-base select-none drop-shadow-md tracking-wide uppercase">
       <li>

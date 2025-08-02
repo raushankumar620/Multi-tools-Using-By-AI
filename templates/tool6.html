@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+   
+        
+        .main-container {
+            padding: 2rem 0;
+            min-height: calc(100vh - 76px);
+        }
+   
+        
+        .voice-assistant-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .mic-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: rgb(255, 255, 255);
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .mic-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .mic-button.listening {
+            animation: listening-pulse 1s infinite;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+        }
+        
+        @keyframes listening-pulse {
+            0% { box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6); }
+            100% { box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
+        }
+        
+        .status-display {
+            background: rgba(208, 214, 13, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .command-list {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .command-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .command-item:last-child {
+            border-bottom: none;
+        }
+        
+        .command-category {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-right: 0.5rem;
+        }
+        
+        .back-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+        
+        .wave-animation {
+            display: inline-block;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+        
+        .listening-indicator {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .wave-bar {
+            width: 4px;
+            height: 20px;
+            background: #667eea;
+            margin: 0 2px;
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        
+        /* Toggle Section Styles */
+        .toggle-section {
+            margin: 2rem 0;
+        }
+        
+        .toggle-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .toggle-btn.active {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+        
+        .toggle-content {
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .toggle-content.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .compact-commands {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {% include 'layout/navbar.html' %}
+    
+    <div class="container main-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <a href="{{ url_for('home') }}" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+                
+                <!-- Main Tool Card -->
+                <div class="tool-card text-center">
+                    <div class="voice-assistant-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h1 class="mb-3">🎤 AI Voice Assistant</h1>
+                    <p class="lead mb-4">Your intelligent voice-powered assistant that can help you with various tasks without any external APIs!</p>
+                    
+                    <!-- Voice Control Section -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <button id="micButton" class="mic-button">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <div class="mt-3">
+                                    <button id="startBtn" class="btn btn-success btn-lg me-2">
+                                        <i class="fas fa-play"></i> Start Assistant
+                                    </button>
+                                    <button id="stopBtn" class="btn btn-danger btn-lg" disabled>
+                                        <i class="fas fa-stop"></i> Stop Assistant
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Listening Indicator -->
+                            <div id="listeningIndicator" class="listening-indicator">
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                            </div>
+                            
+                            <!-- Status Display -->
+                            <div id="statusDisplay" class="status-display">
+                                <h5><i class="fas fa-info-circle"></i> Status</h5>
+                                <p id="statusMessage">Click "Start Assistant" to begin voice interaction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Voice Commands Section -->
+                <div class="toggle-section">
+                    <button class="toggle-btn" onclick="toggleSection('commands')">
+                        <i class="fas fa-list-ul"></i> Voice Commands & Features
+                        <i class="fas fa-chevron-down float-end" id="commands-icon"></i>
+                    </button>
+                    <div id="commands" class="toggle-content">
+                        <div class="section-card">
+                            <div class="compact-commands">
+                                <div class="command-list">
+                                    <h5><i class="fas fa-microphone"></i> Basic Commands</h5>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-clock feature-icon"></i>Time & Date
+                                        </div>
+                                        <small>"What time is it?" • "What's the date?"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-globe feature-icon"></i>Web Browsing
+                                        </div>
+                                        <small>"Open Google" • "Open YouTube"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-calculator feature-icon"></i>Applications
+                                        </div>
+                                        <small>"Open calculator" • "Open notepad"</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-list">
+                                    <h5><i class="fas fa-star"></i> Smart Features</h5>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-volume-up feature-icon"></i>Volume Control
+                                        </div>
+                                        <small>"Volume up" • "Volume down" • "Mute"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-calculator feature-icon"></i>Math Calculations
+                                        </div>
+                                        <small>"Calculate 15 plus 25" • "What is 100 divided by 5?"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-laugh feature-icon"></i>Entertainment
+                                        </div>
+                                        <small>"Tell me a joke" • "Make me laugh"</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- How to Use Section -->
+                <div class="toggle-section">
+                    <button class="toggle-btn" onclick="toggleSection('howto')">
+                        <i class="fas fa-question-circle"></i> How to Use
+                        <i class="fas fa-chevron-down float-end" id="howto-icon"></i>
+                    </button>
+                    <div id="howto" class="toggle-content">
+                        <div class="section-card">
+                            <div class="info-grid">
+                                <div class="info-card">
+                                    <i class="fas fa-play-circle" style="font-size: 3rem; color: #667eea;"></i>
+                                    <h5 class="mt-3">1. Start</h5>
+                                    <p>Click "Start Assistant" to activate voice recognition</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-microphone" style="font-size: 3rem; color: #667eea;"></i>
+                                    <h5 class="mt-3">2. Speak</h5>
+                                    <p>Speak your command clearly when you see the listening indicator</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-robot" style="font-size: 3rem; color: #667eea;"></i>
+                                    <h5 class="mt-3">3. Listen</h5>
+                                    <p>The assistant will respond and perform the requested action</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Features Section -->
+                <div class="toggle-section">
+                    <button class="toggle-btn" onclick="toggleSection('features')">
+                        <i class="fas fa-cogs"></i> Additional Features
+                        <i class="fas fa-chevron-down float-end" id="features-icon"></i>
+                    </button>
+                    <div id="features" class="toggle-content">
+                        <div class="section-card">
+                            <div class="compact-commands">
+                                <div class="command-list">
+                                    <h5><i class="fas fa-tools"></i> System Control</h5>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-camera feature-icon"></i>Camera
+                                        </div>
+                                        <small>"Take photo" • "Camera"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-search feature-icon"></i>Search
+                                        </div>
+                                        <small>"Search for [topic]" • "Find [something]"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-power-off feature-icon"></i>Control
+                                        </div>
+                                        <small>"Stop" • "Exit" • "Bye"</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="command-list">
+                                    <h5><i class="fas fa-heart"></i> Interactive</h5>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-handshake feature-icon"></i>Greetings
+                                        </div>
+                                        <small>"Hello" • "Hi" • "Good morning"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-question-circle feature-icon"></i>Help
+                                        </div>
+                                        <small>"Help" • "What can you do?"</small>
+                                    </div>
+                                    
+                                    <div class="command-item">
+                                        <div class="command-category">
+                                            <i class="fas fa-microphone-slash feature-icon"></i>Offline Mode
+                                        </div>
+                                        <small>Works completely offline!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let isListening = false;
+        let assistantRunning = false;
+        
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const micButton = document.getElementById('micButton');
+        const statusMessage = document.getElementById('statusMessage');
+        const listeningIndicator = document.getElementById('listeningIndicator');
+        
+        // Start assistant
+        startBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/start_voice_assistant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    assistantRunning = true;
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    micButton.classList.add('listening');
+                    statusMessage.textContent = data.msg;
+                    listeningIndicator.style.display = 'flex';
+                    
+                    // Start checking status
+                    checkAssistantStatus();
+                } else {
+                    statusMessage.textContent = data.msg || 'Failed to start assistant';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusMessage.textContent = 'Error starting assistant';
+            }
+        });
+        
+        // Stop assistant
+        stopBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/stop_voice_assistant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                assistantRunning = false;
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                micButton.classList.remove('listening');
+                statusMessage.textContent = data.msg || 'Assistant stopped';
+                listeningIndicator.style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusMessage.textContent = 'Error stopping assistant';
+            }
+        });
+        
+        // Check assistant status periodically
+        function checkAssistantStatus() {
+            if (!assistantRunning) return;
+            
+            fetch('/voice_assistant_status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.running) {
+                        statusMessage.textContent = data.status || 'Assistant is listening...';
+                        setTimeout(checkAssistantStatus, 2000);
+                    } else {
+                        // Assistant stopped
+                        assistantRunning = false;
+                        startBtn.disabled = false;
+                        stopBtn.disabled = true;
+                        micButton.classList.remove('listening');
+                        statusMessage.textContent = 'Assistant stopped';
+                        listeningIndicator.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Status check error:', error);
+                    setTimeout(checkAssistantStatus, 5000);
+                });
+        }
+        
+        // Mic button click (visual feedback)
+        micButton.addEventListener('click', () => {
+            if (assistantRunning) {
+                statusMessage.textContent = 'Listening... Speak now!';
+                // Add visual feedback
+                micButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    micButton.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                statusMessage.textContent = 'Please start the assistant first';
+            }
+        });
+        
+        // Toggle section function
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const icon = document.getElementById(sectionId + '-icon');
+            const button = content.previousElementSibling;
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+                button.classList.remove('active');
+            } else {
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+                button.classList.add('active');
+            }
+        }
+        
+        // Add smooth rotation to chevron icons
+        document.querySelectorAll('.toggle-btn i[id$="-icon"]').forEach(icon => {
+            icon.style.transition = 'transform 0.3s ease';
+        });
+    </script>
+</body>
+</html>
